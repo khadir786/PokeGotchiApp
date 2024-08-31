@@ -1,0 +1,48 @@
+﻿.play-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Ensure that children are positioned relative to this container */
+}
+#play-title {
+    height: 100%;
+}
+
+#play-riolu-gif {
+    width: 60px;
+    height: 60px;
+    bottom: 30%;
+    position: absolute;
+    animation: slide-in 5s forwards; 
+}
+
+
+@keyframes slide-in {
+    from {
+        left: -60px;
+    }
+
+    to {
+        left: calc(50% - 350px); /* Adjust this value based on the exact size and positioning */
+    }
+}
+
+
+
+.play-footer {
+    width: 100%;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    font-size: 24px;
+}
+
+#play-import {
+    margin: 1em;
+    margin-right: auto;
+}
+
+#play-github-link {
+    margin: 1em;
+}

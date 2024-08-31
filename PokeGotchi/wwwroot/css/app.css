@@ -105,9 +105,9 @@ code {
 /* Set the background color for the entire page */
 body {
     margin: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Itim", cursive;
     background-color: #ECC792; /* Set the desired background color */
-    color: #754c24; /* Optional: Set a default text color */
+    color: #974E4E; /* Optional: Set a default text color */
     height: 100vh;
     display: flex;
     justify-content: center;
