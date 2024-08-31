@@ -14,20 +14,19 @@
     height: 60px;
     bottom: 30%;
     position: absolute;
-    animation: slide-in 5s forwards; 
+    animation: slide-in 9s forwards; 
 }
 
 
 @keyframes slide-in {
     from {
-        left: -60px;
+        left: -100%;
     }
 
     to {
-        left: calc(50% - 350px); /* Adjust this value based on the exact size and positioning */
+        left: calc(50% - 375px); /* Adjust this value based on the exact size and positioning */
     }
 }
-
 
 
 .play-footer {
