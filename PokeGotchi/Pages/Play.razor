@@ -2,7 +2,7 @@
 @inject AppState GameState
 
 <!--Play Screen-->
-<div class="play-container">
+<div class="play-container @containerAnimatedClass">
 
     <div class="play-title-container">
         <img id="play-riolu-gif" src="images/walk-trip.gif" />
@@ -23,15 +23,17 @@
 <!-------------->
 @code {
     private string playButtonClass = "";
+    private string containerAnimatedClass = "animate__animated animate__fadeIn";
 
     // wait for the play button animation to play out then navigate
     private async Task HandlePlayClick()
     {
         playButtonClass = "animate__wobble";
-        await Task.Delay(1000);
+        containerAnimatedClass = "animate__animated animate__fadeOut animate__delay-1s";
+        await Task.Delay(3000);
+        StateHasChanged();  // Explicitly tell Blazor to re-render the component
+
         GameState.GameScreen = "PLAYGROUND";
     }
-
-
-
 }
+
