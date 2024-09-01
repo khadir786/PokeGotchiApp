@@ -1,5 +1,17 @@
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Itim", cursive;
+}
+
+#app {
+    height: 100%;
+    width: 100%;
 }
 
 h1:focus {
@@ -105,7 +117,7 @@ code {
 /* Set the background color for the entire page */
 body {
     margin: 0;
-    font-family: "Itim", cursive;
+    
     background-color: #ECC792; /* Set the desired background color */
     color: #974E4E; /* Optional: Set a default text color */
     height: 100vh;

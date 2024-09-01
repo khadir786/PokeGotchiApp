@@ -1,20 +1,37 @@
 ﻿@page "/play"
+@inject NavigationManager Navigation
 
-<div class="play-title-container">
-    <img id="play-riolu-gif" src="images/walk-trip.gif"/>
-    <img id="play-title" src="images/pokegotchi-title.gif" height="30%" width="30%">
+<!--Play Screen-->
+<div class="play-container">
+
+    <div class="play-title-container">
+        <img id="play-riolu-gif" src="images/walk-trip.gif" />
+        <img id="play-title" src="images/pokegotchi-title.gif" height="30%" width="30%">
+    </div>
+
+    <div id="play-play-button" class="animate__animated @playButtonClass" @onclick="HandlePlayClick">Play</div>
+
+    <footer class="play-footer">
+        <div id="play-import">
+            Import Save
+        </div>
+        <div id="play-github-link">
+            <a target="_blank" href="https://github.com/khadir786">github.com/khadir786</a>
+        </div>
+    </footer>
 </div>
-
-<h1>Play</h1>
-
-<footer class="play-footer">
-    <div id="play-import">
-        Import Save
-    </div>
-    <div id="play-github-link">
-        <a href="https://github.com/khadir786">github.com/khadir786</a>
-    </div>
-</footer>
+<!-------------->
 @code {
+    private string playButtonClass = "";
+
+    // wait for the play button animation to play out then navigate
+    private async Task HandlePlayClick()
+    {
+        playButtonClass = "animate__wobble";
+        await Task.Delay(1000);
+        Navigation.NavigateTo("playground");
+    }
+
+
 
 }
