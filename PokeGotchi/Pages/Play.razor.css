@@ -15,7 +15,7 @@
     position: relative; /* Ensure that children are positioned relative to this container */
 }
 #play-title {
-    height: 100%;
+    height: auto;
 }
 
 #play-riolu-gif {

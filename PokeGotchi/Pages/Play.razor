@@ -1,12 +1,12 @@
-﻿@page "/play"
-@inject NavigationManager Navigation
+﻿@inject NavigationManager Navigation
+@inject AppState GameState
 
 <!--Play Screen-->
 <div class="play-container">
 
     <div class="play-title-container">
         <img id="play-riolu-gif" src="images/walk-trip.gif" />
-        <img id="play-title" src="images/pokegotchi-title.gif" height="30%" width="30%">
+        <img id="play-title" src="images/pokegotchi-title.gif" width="30%">
     </div>
 
     <div id="play-play-button" class="animate__animated @playButtonClass" @onclick="HandlePlayClick">Play</div>
@@ -29,7 +29,7 @@
     {
         playButtonClass = "animate__wobble";
         await Task.Delay(1000);
-        Navigation.NavigateTo("playground");
+        GameState.GameScreen = "PLAYGROUND";
     }
 
 
