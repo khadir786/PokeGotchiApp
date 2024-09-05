@@ -10,6 +10,7 @@ public class Partner : Pokemon
     public int Happiness { get; set; }
     public int Friendship { get; set; }
     public int Hunger { get; set; }
+    public string AnimationState { get; set; }
 
     public Partner(string species, string name, int xPos, int yPos, int happiness = 0, int friendship = 10, int hunger = 60) : base()
     {
