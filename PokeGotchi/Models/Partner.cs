@@ -27,13 +27,54 @@ public class Partner : Pokemon
 
     public override void Walk(int x, int y, Direction direction)
     {
-        throw new NotImplementedException();
+        // Update the XPos and YPos based on direction
+        switch (direction)
+        {
+            case Direction.Up:
+                YPos -= y;
+                AnimationState = "images/animations/walks/walk-up.gif";
+                break;
+            case Direction.Down:
+                YPos += y;
+                AnimationState = "images/animations/walks/walk-down.gif";
+                break;
+            case Direction.Left:
+                XPos -= x;
+                AnimationState = "images/animations/walks/walk-left.gif";
+                break;
+            case Direction.Right:
+                XPos += x;
+                AnimationState = "images/animations/walks/walk-right.gif";
+                break;
+            case Direction.UpRight:
+                XPos += x;
+                YPos -= y;
+                AnimationState = "images/animations/walks/walk-up-right.gif";
+                break;
+            case Direction.DownRight:
+                XPos += x;
+                YPos += y;
+                AnimationState = "images/animations/walks/walk-down-right.gif";
+                break;
+            case Direction.UpLeft:
+                XPos -= x;
+                YPos -= y;
+                AnimationState = "images/animations/walks/walk-up-left.gif";
+                break;
+            case Direction.DownLeft:
+                XPos -= x;
+                YPos += y;
+                AnimationState = "images/animations/walks/walk-down-left.gif";
+                break;
+        }
     }
 
     public override void Run(int x, int y, Direction direction)
     {
-        throw new NotImplementedException();
+        // Running logic could be a faster version of Walk
+        Walk(x * 2, y * 2, direction);
     }
+
 
 
     public void Eat(Food food)

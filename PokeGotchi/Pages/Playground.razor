@@ -1,8 +1,52 @@
-﻿<div id="playground-screen-container" class="stamp animate__animated animate__backInDown">
+﻿@using PokeGotchi.Models
+@using PokeGotchi.Models.Enums
+<div id="playground-screen-container" class="stamp animate__animated animate__backInDown">
     <div id="div1">div1</div>
-    <div id="div2">div2</div>
+    <div id="div2">
+        <!-- Display the partner Pokémon sprite -->
+        <img id="pokemon-image"
+             src="@PartnerPokemon.AnimationState"
+             style="position: relative;
+                    left: @(PartnerPokemon.XPos)px;
+                    top: @(PartnerPokemon.YPos)px;"
+             alt="@PartnerPokemon.Name" />
+    </div>
+
+    <div>
+        <button @onclick="() => MovePartner(Direction.Up)">Up</button>
+        <button @onclick="() => MovePartner(Direction.Left)">Left</button>
+        <button @onclick="() => MovePartner(Direction.Right)">Right</button>
+        <button @onclick="() => MovePartner(Direction.Down)">Down</button>
+        <button @onclick="GoIdle">Idle</button>
+    </div>
+
+    @code {
+        private void MovePartner(Direction direction)
+        {
+            // Move the partner in the selected direction
+            PartnerPokemon.Walk(10, 10, direction);
+            StateHasChanged();  // Force UI to update
+        }
+
+        private void GoIdle()
+        {
+            PartnerPokemon.AnimationState = "images/animations/idle.gif";
+            StateHasChanged();
+        }
+
+    }
+
 </div>
 
 @code {
+    // Partner instance representing the Pokémon partner
+    private Partner PartnerPokemon;
+
+    protected override void OnInitialized()
+    {
+        // Initialize the partner Pokémon with a starting position and initial sprite (e.g., idle gif)
+        PartnerPokemon = new Partner("Riolu", "Riolu", 100, 100);
+        PartnerPokemon.AnimationState = "images/animations/idle.gif"; // Initial idle state
+    }
 
 }
