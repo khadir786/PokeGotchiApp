@@ -29,7 +29,7 @@
     mask: var(--mask);
 }
 
-#div1 {
+#playground-partner-info {
     grid-area: 1 / 1 / 7 / 2;
     background-color: #71563C;
     border-radius: 10px;
@@ -42,5 +42,6 @@
 }
 
 #pokemon-image {
+    image-rendering: pixelated;
     scale: 2;
 }

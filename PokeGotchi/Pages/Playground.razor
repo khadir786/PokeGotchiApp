@@ -1,7 +1,11 @@
 ﻿@using PokeGotchi.Models
 @using PokeGotchi.Models.Enums
 <div id="playground-screen-container" class="stamp animate__animated animate__backInDown">
-    <div id="div1">div1</div>
+    <div id="playground-partner-info">
+        
+        
+
+    </div>
     <div id="div2">
         <!-- Display the partner Pokémon sprite -->
         <img id="pokemon-image"
@@ -25,7 +29,7 @@
         private void MovePartner(Direction direction)
         {
             // Move the partner in the selected direction
-            PartnerPokemon.Walk(0, 0, direction);
+            PartnerPokemon.Walk(10, 10, direction);
             StateHasChanged();  // Force UI to update
         }
 
