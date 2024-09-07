@@ -8,7 +8,8 @@
              src="@PartnerPokemon.AnimationState"
              style="position: relative;
                     left: @(PartnerPokemon.XPos)px;
-                    top: @(PartnerPokemon.YPos)px;"
+                    top: @(PartnerPokemon.YPos)px; 
+                    display: inline-block;"
              alt="@PartnerPokemon.Name" />
     </div>
 
@@ -24,7 +25,7 @@
         private void MovePartner(Direction direction)
         {
             // Move the partner in the selected direction
-            PartnerPokemon.Walk(10, 10, direction);
+            PartnerPokemon.Walk(0, 0, direction);
             StateHasChanged();  // Force UI to update
         }
 

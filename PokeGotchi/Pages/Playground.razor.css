@@ -42,6 +42,5 @@
 }
 
 #pokemon-image {
-    width: 54px;
-    height: 80px;
+    scale: 2;
 }
