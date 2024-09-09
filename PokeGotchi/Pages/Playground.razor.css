@@ -48,7 +48,8 @@
     position: relative; 
     height: 390px;
     justify-content: flex-end; 
-    padding-bottom: 20px; 
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 #playground-partner-name {
