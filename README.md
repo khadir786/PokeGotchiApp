@@ -20,3 +20,12 @@ Instead, each screen component is rendered based on the AppState's `GameScreen` 
 
      ![Walk-Anim animation-all](https://github.com/user-attachments/assets/b9555913-34a3-48ff-9d69-b20a0941952f)
 
+#### **07/09/2024**
+- Added the pixelised image-rerendering property in styling of the animations so they scale better
+
+#### **08/09/2024**
+- Updated and fixed animations having some frames be cut out
+- Added current state container in the partner info section
+
+#### **09/09/2024**
+-  Added stats in the stats section                   
