@@ -5,12 +5,47 @@ namespace PokeGotchi.Models;
 public class Partner : Pokemon
 {
     public string Name { get; set; } = "Riolu";
+    public Dictionary<string, int> Stats { get; set; } = new();
+
+    private int _happiness;
+    private int _friendship;
+    private int _hunger;
+
     public int XPos { get; set; }
     public int YPos { get; set; }
-    public int Happiness { get; set; }
-    public int Friendship { get; set; }
-    public int Hunger { get; set; }
-    // animation state would be the path of a gif
+
+    public int Happiness
+    {
+        get => _happiness;
+        set
+        {
+            _happiness = value;
+            Stats["Happiness"] = _happiness; 
+        }
+    }
+
+    public int Friendship
+    {
+        get => _friendship;
+        set
+        {
+            _friendship = value;
+            Stats["Friendship"] = _friendship; 
+        }
+    }
+
+    public int Hunger
+    {
+        get => _hunger;
+        set
+        {
+            _hunger = value;
+            Stats["Hunger"] = _hunger; 
+        }
+    }
+
+
+    // animation state represents the path of a gif
     public string AnimationState { get; set; }
 
     public Partner(string species, string name, int xPos, int yPos, int happiness = 0, int friendship = 10, int hunger = 60) : base()
@@ -23,6 +58,11 @@ public class Partner : Pokemon
         this.Happiness = happiness == 0 ? Random.Shared.Next(15, 30) : happiness;
         this.Friendship = friendship;
         this.Hunger = hunger;
+
+        // Populate the Stats dictionary with initial values
+        Stats["Happiness"] = this.Happiness;
+        Stats["Friendship"] = this.Friendship;
+        Stats["Hunger"] = this.Hunger;
     }
 
 
@@ -87,17 +127,14 @@ public class Partner : Pokemon
     {
         throw new NotImplementedException();
     }
-    
+
     public void Tumble()
     {
         throw new NotImplementedException();
     }
-    
+
     public void Fall()
     {
         throw new NotImplementedException();
     }
-
-
-
 }
