@@ -9,20 +9,40 @@
     <div id="play-play-button" class="animate__animated @playButtonClass" @onclick="HandlePlayClick">Play</div>
 
     <footer class="play-footer">
-        <div id="play-import">Import Save</div>
+        <div id="play-import" class="animate__animated @importClass" @onclick="OpenModal">Import Save</div>
         <div id="play-github-link">
             <a target="_blank" href="https://github.com/khadir786">github.com/khadir786</a>
         </div>
     </footer>
 </div>
 
+<!-- Modal overlay -->
+@if (isModalOpen)
+{
+    // two modals because the animation makes the modal's dark background slide in
+    // one modal with background, one without
+    <div class="modal-overlay animate__animated @modalOverlayClass"></div>
+    <div class="modal-overlay animate__animated @modalContentClass" style="background: none">
+        <div class="modal-content">
+            <h2>Modal Title</h2>
+            <p>This is the modal content.</p>
+            <button @onclick="CloseModal">Close</button>
+        </div>
+    </div>
+}
+
 @code {
+    private bool isModalOpen = false;
+    private string modalOverlayClass = "animate__fadeIn";
+    private string modalContentClass = "animate__fadeInDownBig";
     private string playButtonClass = "";
+    private string importClass = "";
     private string containerAnimatedClass = "animate__animated animate__fadeIn";
+
 
     protected override async Task OnInitializedAsync()
     {
-        // load saved data from local storage 
+        // load saved data from local storage
         await GameState.LoadSaveDataAsync();
     }
 
@@ -32,5 +52,24 @@
         containerAnimatedClass = "animate__animated animate__fadeOut animate__delay-1s";
         await Task.Delay(3000);
         GameState.GameScreen = "PLAYGROUND";
+    }
+
+    private void OpenModal()
+    {
+        isModalOpen = true;
+        modalOverlayClass = "animate__fadeIn";
+        modalContentClass = "animate__fadeInDownBig";
+        importClass = "animate__pulse";
+    }
+
+    private async Task CloseModal()
+    {
+        modalOverlayClass = "animate__fadeOut";
+        modalContentClass = "animate__fadeOutUpBig";
+        importClass = "";
+
+        // wait for the animation to complete
+        await Task.Delay(500);
+        isModalOpen = false;
     }
 }
