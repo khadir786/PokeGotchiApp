@@ -26,7 +26,9 @@ Instead, each screen component is rendered based on the AppState's `GameScreen` 
 #### **08/09/2024**
 - Updated and fixed animations having some frames be cut out
 - Added current state container in the partner info section
-        ![current-state-demo](https://github.com/user-attachments/assets/17205019-e4d7-4f23-9b09-af4a43c3a0ea)
+
+
+![current-state-demo-resized](https://github.com/user-attachments/assets/956ccc9f-d3b6-4746-9fec-51297e0e9487)
 
 
 #### **09/09/2024**
