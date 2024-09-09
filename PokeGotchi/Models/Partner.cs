@@ -70,6 +70,7 @@ public class Partner : Pokemon
         this.Happiness = happiness == 0 ? Random.Shared.Next(15, 30) : happiness;
         this.Friendship = friendship;
         this.Hunger = hunger;
+        this.Energy = energy;
 
         // Populate the Stats dictionary with initial values
         Stats["Happiness"] = this.Happiness;
