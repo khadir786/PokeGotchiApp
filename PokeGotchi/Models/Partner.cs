@@ -81,6 +81,7 @@ public class Partner : Pokemon
         Mood[] possibleMoods = { Mood.Angry, Mood.Playful, Mood.Wary };
         int randomIdx = Random.Shared.Next(possibleMoods.Length);
         this.CurrentMood = possibleMoods[randomIdx];
+        this.AnimationState = "images/animations/idle.gif";
 
     }
 
