@@ -8,7 +8,14 @@
             <p id="playground-partner-name">@PartnerPokemon.Name</p>
 
         </div>
+        
+        <div id="playground-partner-stats-container">
+            @foreach (KeyValuePair<string, int> stat in PartnerPokemon.Stats)
+            {
+                <p>@stat.Key: @stat.Value</p>
+            }
 
+        </div>
 
     </div>
     <div id="playground-container">
@@ -51,7 +58,6 @@
 </div>
 
 @code {
-    // Partner instance representing the Pokémon partner
     private Partner PartnerPokemon;
 
     protected override void OnInitialized()
