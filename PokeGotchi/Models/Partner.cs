@@ -10,6 +10,7 @@ public class Partner : Pokemon
     private int _happiness;
     private int _friendship;
     private int _hunger;
+    private int _energy;
     public Mood CurrentMood { get; set; }
 
     public int XPos { get; set; }
@@ -21,7 +22,7 @@ public class Partner : Pokemon
         set
         {
             _happiness = value;
-            Stats["Happiness"] = _happiness; 
+            Stats["Happiness"] = _happiness;
         }
     }
 
@@ -31,7 +32,7 @@ public class Partner : Pokemon
         set
         {
             _friendship = value;
-            Stats["Friendship"] = _friendship; 
+            Stats["Friendship"] = _friendship;
         }
     }
 
@@ -41,7 +42,17 @@ public class Partner : Pokemon
         set
         {
             _hunger = value;
-            Stats["Hunger"] = _hunger; 
+            Stats["Hunger"] = _hunger;
+        }
+    }
+
+    public int Energy
+    {
+        get => _energy;
+        set
+        {
+            _energy = value;
+            Stats["Energy"] = _energy;
         }
     }
 
@@ -49,7 +60,7 @@ public class Partner : Pokemon
     // animation state represents the path of a gif
     public string AnimationState { get; set; }
 
-    public Partner(string species, string name, int xPos, int yPos, int happiness = 0, int friendship = 10, int hunger = 60) : base()
+    public Partner(string species, string name, int xPos, int yPos, int happiness = 0, int friendship = 10, int hunger = 60, int energy = 55)
     {
         this.Species = species;
         this.Name = name;
@@ -64,8 +75,9 @@ public class Partner : Pokemon
         Stats["Happiness"] = this.Happiness;
         Stats["Friendship"] = this.Friendship;
         Stats["Hunger"] = this.Hunger;
+        Stats["Energy"] = this.Energy;
 
-        Mood[] possibleMoods = { Mood.Angry , Mood.Playful, Mood.Wary};
+        Mood[] possibleMoods = { Mood.Angry, Mood.Playful, Mood.Wary };
         int randomIdx = Random.Shared.Next(possibleMoods.Length);
         this.CurrentMood = possibleMoods[randomIdx];
 
