@@ -1,0 +1,32 @@
+﻿@page "/play"
+@using System.ComponentModel
+@inject AppState GameState
+
+@if (GameState.GameScreen == "PLAY") 
+{
+    <Play />
+}
+else if (GameState.GameScreen == "PLAYGROUND") 
+{
+    <Playground />
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        GameState.PropertyChanged += OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(GameState.GameScreen))
+        {
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void Dispose()
+    {
+        GameState.PropertyChanged -= OnGameStateChanged;
+    }
+}
