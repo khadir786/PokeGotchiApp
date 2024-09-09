@@ -10,10 +10,12 @@
         </div>
         
         <div id="playground-partner-stats-container">
+
             @foreach (KeyValuePair<string, int> stat in PartnerPokemon.Stats)
             {
                 <p>@stat.Key: @stat.Value</p>
             }
+            <p>Mood: @PartnerPokemon.CurrentMood</p>
 
         </div>
 

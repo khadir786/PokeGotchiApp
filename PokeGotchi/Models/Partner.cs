@@ -10,6 +10,7 @@ public class Partner : Pokemon
     private int _happiness;
     private int _friendship;
     private int _hunger;
+    public Mood CurrentMood { get; set; }
 
     public int XPos { get; set; }
     public int YPos { get; set; }
@@ -63,6 +64,11 @@ public class Partner : Pokemon
         Stats["Happiness"] = this.Happiness;
         Stats["Friendship"] = this.Friendship;
         Stats["Hunger"] = this.Hunger;
+
+        Mood[] possibleMoods = { Mood.Angry , Mood.Playful, Mood.Wary};
+        int randomIdx = Random.Shared.Next(possibleMoods.Length);
+        this.CurrentMood = possibleMoods[randomIdx];
+
     }
 
 
