@@ -1,9 +1,6 @@
-﻿@inject NavigationManager Navigation
-@inject AppState GameState
+﻿@inject AppState GameState
 
-<!--Play Screen-->
 <div class="play-container @containerAnimatedClass">
-
     <div class="play-title-container">
         <img id="play-riolu-gif" src="images/walk-trip.gif" />
         <img id="play-title" src="images/pokegotchi-title.gif" width="30%">
@@ -12,28 +9,28 @@
     <div id="play-play-button" class="animate__animated @playButtonClass" @onclick="HandlePlayClick">Play</div>
 
     <footer class="play-footer">
-        <div id="play-import">
-            Import Save
-        </div>
+        <div id="play-import">Import Save</div>
         <div id="play-github-link">
             <a target="_blank" href="https://github.com/khadir786">github.com/khadir786</a>
         </div>
     </footer>
 </div>
-<!-------------->
+
 @code {
     private string playButtonClass = "";
     private string containerAnimatedClass = "animate__animated animate__fadeIn";
 
-    // wait for the play button animation to play out then navigate
+    protected override async Task OnInitializedAsync()
+    {
+        // load saved data from local storage 
+        await GameState.LoadSaveDataAsync();
+    }
+
     private async Task HandlePlayClick()
     {
         playButtonClass = "animate__wobble";
         containerAnimatedClass = "animate__animated animate__fadeOut animate__delay-1s";
         await Task.Delay(3000);
-        StateHasChanged();  // Explicitly tell Blazor to re-render the component
-
         GameState.GameScreen = "PLAYGROUND";
     }
 }
-
