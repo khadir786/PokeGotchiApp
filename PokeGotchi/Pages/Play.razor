@@ -35,6 +35,12 @@
                     @errorMessage
                 </div>
             }
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="success-message">
+                    @successMessage
+                </div>
+            }
 
             <button @onclick="CloseModal">Close</button>
         </div>
@@ -50,6 +56,7 @@
     private string containerAnimatedClass = "animate__animated animate__fadeIn";
 
     private string errorMessage = "";
+    private string successMessage = "";
 
 
     protected override async Task OnInitializedAsync()
@@ -80,6 +87,7 @@
         modalContentClass = "animate__fadeOutUpBig";
         importClass = "";
         errorMessage = "";
+        successMessage = "";
 
         // wait for the animation to complete
         await Task.Delay(500);
@@ -120,7 +128,7 @@
                         }
 
                         // passed validation checks
-                        errorMessage = "";
+                        successMessage = "Save data imported successfully";
                         GameState.SaveData = saveData;
                         await GameState.SaveGameDataAsync();  // overwrite localStorage
 
