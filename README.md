@@ -32,5 +32,17 @@ Instead, each screen component is rendered based on the AppState's `GameScreen` 
 
 
 #### **09/09/2024**
--  Added stats in the stats section                   
+-  Added stats in the stats section
+                 
 ![stats](https://github.com/user-attachments/assets/2be7bc66-ab1d-4b34-ba9a-70094c6e774a)
+
+- Added energy stat
+- Added local storage to keep save data
+- Added **export and import** functionality - Players can export their game data as a JSON file, and also import save files. Save data is saved to local storage.
+- Created modal for import
+  
+
+
+
+
+
