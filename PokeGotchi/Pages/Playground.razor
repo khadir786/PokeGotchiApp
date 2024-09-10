@@ -23,9 +23,17 @@
         </div>
 
         <div id="playground-container">
+            @for (int row = 0; row < 20; row++) // Adjust rows count as needed
+            {
+                @for (int col = 0; col < 20; col++) // Adjust columns count as needed
+                {
+                    <div class="grid-cell"></div>
+                }
+            }
+
             <img id="pokemon-image"
                  src="@PartnerPokemon.AnimationState"
-                 style="position: relative; left: @(PartnerPokemon.XPos)px; top: @(PartnerPokemon.YPos)px; display: inline-block;"
+                 style="position: relative; left: @(PartnerPokemon.XPos)px; top: @(PartnerPokemon.YPos)px; "
                  alt="@PartnerPokemon.Name" />
         </div>
 
@@ -54,16 +62,53 @@
 
 @code {
     private Partner PartnerPokemon;
+    private int playgroundWidth;
+    private int playgroundHeight;
+    private DotNetObjectReference<Playground> dotNetHelper;
 
     protected override void OnInitialized()
     {
-        // load partner pokemon from AppState (localStorage -> appState) 
+        // load partner pokemon from AppState (localStorage -> appState)
         PartnerPokemon = GameState.SaveData.PartnerPokemon;
+        dotNetHelper = DotNetObjectReference.Create(this);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // ensure the resize observer is attached after the component is rendered
+            await JS.InvokeVoidAsync("observeElementSize", "playground-container", dotNetHelper);
+        }
+    }
+
+    [JSInvokable]
+    public void OnSizeChanged(int width, int height)
+    {
+        playgroundWidth = width;
+        playgroundHeight = height;
+        
+
+        Console.WriteLine("width: " + playgroundWidth);
+        Console.WriteLine("height: " + playgroundHeight);
+
+        // force re-rendering after size changes
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        // cleanup the observer when the component is destroyed
+        if (dotNetHelper != null)
+        {
+            JS.InvokeVoidAsync("unobserveElementSize", "playground-container");
+            dotNetHelper.Dispose();
+        }
     }
 
     private void MovePartner(Direction direction)
     {
-        PartnerPokemon.Walk(10, 10, direction);
+        PartnerPokemon.Walk(direction);
         StateHasChanged(); // re-render component
         GameState.SaveGameDataAsync();
     }
