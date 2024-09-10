@@ -41,6 +41,8 @@ Instead, each screen component is rendered based on the AppState's `GameScreen` 
 - Added **export and import** functionality - Players can export their game data as a JSON file, and also import save files. Save data is saved to local storage.
 - Created modal for import
   
+  ![import-demo-resized](https://github.com/user-attachments/assets/5b1f7d25-561c-4a95-bed5-26ab25fb40c0)
+
 
 
 
