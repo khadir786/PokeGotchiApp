@@ -1,6 +1,8 @@
-﻿@using PokeGotchi.Models
+﻿@using System.Text.Json
+@using PokeGotchi.Models
 @using PokeGotchi.Models.Enums
 @inject AppState GameState
+@inject IJSRuntime JS
 
 <div id="playground-screen-container" class="stamp animate__animated animate__backInDown">
     @if (PartnerPokemon != null)
@@ -39,6 +41,10 @@
             <button @onclick="GoIdle">Idle</button>
         </div>
 
+        <div>
+            <button @onclick="ExportData">Export Data</button>
+        </div>
+
     }
     else
     {
@@ -68,4 +74,14 @@
         StateHasChanged();
         GameState.SaveGameDataAsync();
     }
+
+    private async Task ExportData()
+    {
+        // serialize the PartnerPokemon object to json
+        var jsonSaveData = System.Text.Json.JsonSerializer.Serialize(GameState.SaveData);
+
+        // js function for triggering the downloadFile function (defined in index.html)
+        await JS.InvokeVoidAsync("downloadFile", "pokeGotchiSaveData.json", jsonSaveData);
+    }
+
 }
