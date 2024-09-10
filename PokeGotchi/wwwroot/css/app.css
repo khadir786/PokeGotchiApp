@@ -175,3 +175,9 @@ body {
 .modal-content button:hover {
     background-color: #4d3d2b;
 }
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin: 10px;
+}

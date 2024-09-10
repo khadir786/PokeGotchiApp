@@ -29,6 +29,13 @@
             <h2>Import Save File</h2>
             <p>Import a JSON save file here:</p>
             <InputFile OnChange="Import" />
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="error-message">
+                    @errorMessage
+                </div>
+            }
+
             <button @onclick="CloseModal">Close</button>
         </div>
     </div>
@@ -41,6 +48,8 @@
     private string playButtonClass = "";
     private string importClass = "";
     private string containerAnimatedClass = "animate__animated animate__fadeIn";
+
+    private string errorMessage = "";
 
 
     protected override async Task OnInitializedAsync()
@@ -70,39 +79,71 @@
         modalOverlayClass = "animate__fadeOut";
         modalContentClass = "animate__fadeOutUpBig";
         importClass = "";
+        errorMessage = "";
 
         // wait for the animation to complete
         await Task.Delay(500);
         isModalOpen = false;
     }
 
-    // json file gets read and localstorage is overwritten 
+    // json file gets read and localstorage is overwritten
     private async Task Import(InputFileChangeEventArgs e)
     {
         var file = e.File;
 
+
         if (file != null)
         {
-            using (var stream = file.OpenReadStream())
-            using (var reader = new StreamReader(stream))
+            try
             {
-                string fileContent = await reader.ReadToEndAsync();
-
-                if (!string.IsNullOrWhiteSpace(fileContent))
+                using (var stream = file.OpenReadStream())
+                using (var reader = new StreamReader(stream))
                 {
-                    // deserialize the file content to SaveData object
-                    var saveData = System.Text.Json.JsonSerializer.Deserialize<SaveData>(fileContent);
+                    string fileContent = await reader.ReadToEndAsync();
 
-                    if (saveData != null)
+                    // check if uploaded file is a json file
+                    if (!JsonValidator.IsValidJson(fileContent))
                     {
-                        // update the AppState and save it to local storage
-                        GameState.SaveData = saveData;
-                        await GameState.SaveGameDataAsync();  // Overwrite the local storage
+                        errorMessage = "The uploaded file is not a valid JSON file";
+                        return;
+                    }
 
-                        StateHasChanged(); // re-render the component to reflect changes
+                    // attempt to deserialize and validate the structure
+                    try
+                    {
+                        var saveData = System.Text.Json.JsonSerializer.Deserialize<SaveData>(fileContent);
+
+                        if (saveData == null || !JsonValidator.ValidateSaveData(saveData))
+                        {
+                            errorMessage = "The uploaded JSON file is missing required properties";
+                            return;
+                        }
+
+                        // passed validation checks
+                        errorMessage = "";
+                        GameState.SaveData = saveData;
+                        await GameState.SaveGameDataAsync();  // overwrite localStorage
+
+                        StateHasChanged();
+                    }
+                    catch (Exception)
+                    {
+                        errorMessage = "The uploaded JSON file has an invalid structure";
+
                     }
                 }
             }
+            catch (IOException ex)
+            {
+                errorMessage = $"File size exceeds the allowed limit - {ex.Message}";
+                throw;
+            }
+            // catch-all
+            catch (Exception ex)
+            {
+                errorMessage = $"An error occurred while uploading the file: {ex.Message}";
+            }
+
         }
     }
 
