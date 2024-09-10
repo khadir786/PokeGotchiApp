@@ -1,8 +1,87 @@
-﻿<div id="playground-screen-container" class="stamp animate__animated animate__backInDown">
-    <div id="div1">div1</div>
-    <div id="div2">div2</div>
+﻿@using System.Text.Json
+@using PokeGotchi.Models
+@using PokeGotchi.Models.Enums
+@inject AppState GameState
+@inject IJSRuntime JS
+
+<div id="playground-screen-container" class="stamp animate__animated animate__backInDown">
+    @if (PartnerPokemon != null)
+    {
+        <div id="playground-partner-info">
+            <div id="playground-current-state-container">
+                <img id="playground-current-state-sprite" src="@PartnerPokemon.AnimationState" />
+                <p id="playground-partner-name">@PartnerPokemon.Name</p>
+            </div>
+
+            <div id="playground-partner-stats-container">
+                @foreach (KeyValuePair<string, int> stat in PartnerPokemon.Stats)
+                {
+                    <p>@stat.Key: @stat.Value</p>
+                }
+                <p>Mood: @PartnerPokemon.CurrentMood</p>
+            </div>
+        </div>
+
+        <div id="playground-container">
+            <img id="pokemon-image"
+                 src="@PartnerPokemon.AnimationState"
+                 style="position: relative; left: @(PartnerPokemon.XPos)px; top: @(PartnerPokemon.YPos)px; display: inline-block;"
+                 alt="@PartnerPokemon.Name" />
+        </div>
+
+        <div>
+            <button @onclick="() => MovePartner(Direction.Up)">Up</button>
+            <button @onclick="() => MovePartner(Direction.UpLeft)">Up Left</button>
+            <button @onclick="() => MovePartner(Direction.UpRight)">Up Right</button>
+            <button @onclick="() => MovePartner(Direction.Left)">Left</button>
+            <button @onclick="() => MovePartner(Direction.Right)">Right</button>
+            <button @onclick="() => MovePartner(Direction.Down)">Down</button>
+            <button @onclick="() => MovePartner(Direction.DownLeft)">Down Left</button>
+            <button @onclick="() => MovePartner(Direction.DownRight)">Down Right</button>
+            <button @onclick="GoIdle">Idle</button>
+        </div>
+
+        <div>
+            <button @onclick="ExportData">Export Data</button>
+        </div>
+
+    }
+    else
+    {
+        <p>Loading partner data...</p>
+    }
 </div>
 
 @code {
+    private Partner PartnerPokemon;
+
+    protected override void OnInitialized()
+    {
+        // load partner pokemon from AppState (localStorage -> appState) 
+        PartnerPokemon = GameState.SaveData.PartnerPokemon;
+    }
+
+    private void MovePartner(Direction direction)
+    {
+        PartnerPokemon.Walk(10, 10, direction);
+        StateHasChanged(); // re-render component
+        GameState.SaveGameDataAsync();
+    }
+
+    private void GoIdle()
+    {
+        PartnerPokemon.AnimationState = "images/animations/idle.gif";
+        StateHasChanged();
+        GameState.SaveGameDataAsync();
+    }
+
+    private async Task ExportData()
+    {
+        // serialize the PartnerPokemon object to json
+        var jsonSaveData = System.Text.Json.JsonSerializer.Serialize(GameState.SaveData);
+
+        // js function for triggering the downloadFile function (defined in index.html)
+        await JS.InvokeVoidAsync("downloadFile", "pokeGotchiSaveData.json", jsonSaveData);
+    }
 
 }

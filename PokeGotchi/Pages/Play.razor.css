@@ -21,6 +21,7 @@
 #play-riolu-gif {
     width: 60px;
     height: 60px;
+    image-rendering: pixelated;
     bottom: 30%;
     position: absolute;
     animation: slide-in 9s forwards; 
@@ -63,6 +64,11 @@
     margin-right: auto;
 }
 
-#play-github-link {
-    margin: 1em;
+#play-import:hover {
+    cursor: pointer;
 }
+
+
+#play-github-link {
+        margin: 1em;
+    }
