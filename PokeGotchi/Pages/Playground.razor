@@ -23,9 +23,9 @@
         </div>
 
         <div id="playground-container">
-            @for (int row = 0; row < 20; row++) // Adjust rows count as needed
+            @for (int row = 0; row < numOfRows; row++) // Adjust rows count as needed
             {
-                @for (int col = 0; col < 20; col++) // Adjust columns count as needed
+                @for (int col = 0; col < numOfColumns; col++) // Adjust columns count as needed
                 {
                     <div class="grid-cell"></div>
                 }
@@ -64,6 +64,11 @@
     private Partner PartnerPokemon;
     private int playgroundWidth;
     private int playgroundHeight;
+    private int playgroundArea;
+    private int numOfRows;
+    private int numOfColumns;
+    
+    
     private DotNetObjectReference<Playground> dotNetHelper;
 
     protected override void OnInitialized()
@@ -87,6 +92,13 @@
     {
         playgroundWidth = width;
         playgroundHeight = height;
+        playgroundArea = width * height;
+
+        numOfRows = playgroundWidth / 50;
+        numOfColumns = playgroundHeight / 50;
+
+
+        
         
 
         Console.WriteLine("width: " + playgroundWidth);
