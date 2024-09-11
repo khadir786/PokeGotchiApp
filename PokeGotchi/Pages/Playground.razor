@@ -1,58 +1,18 @@
-﻿@using System.Text.Json
-@using PokeGotchi.Models
-@using PokeGotchi.Models.Enums
+﻿@using PokeGotchi.Components.Playground
 @inject AppState GameState
 @inject IJSRuntime JS
 
 <div id="playground-screen-container" class="stamp animate__animated animate__backInDown">
     @if (PartnerPokemon != null)
     {
-        <div id="playground-partner-info">
-            <div id="playground-current-state-container">
-                <img id="playground-current-state-sprite" src="@PartnerPokemon.AnimationState" />
-                <p id="playground-partner-name">@PartnerPokemon.Name</p>
-            </div>
+        <!-- Partner Info Component -->
+        <PartnerInfo PartnerPokemon="@PartnerPokemon" />
 
-            <div id="playground-partner-stats-container">
-                @foreach (KeyValuePair<string, int> stat in PartnerPokemon.Stats)
-                {
-                    <p>@stat.Key: @stat.Value</p>
-                }
-                <p>Mood: @PartnerPokemon.CurrentMood</p>
-            </div>
-        </div>
+        <!-- Playground Grid Component -->
+        <PlaygroundGrid NumOfRows="@numOfRows" NumOfColumns="@numOfColumns" PartnerPokemon="@PartnerPokemon" />
 
-        <div id="playground-container" style="grid-template-columns: repeat(@numOfColumns, 50px); grid-template-rows: repeat(@numOfRows, 50px);">
-            @for (int row = 0; row < numOfRows; row++)
-            {
-                @for (int col = 0; col < numOfColumns; col++)
-                {
-                    <div class="grid-cell"></div>
-                }
-            }
-
-            <img id="pokemon-image"
-                 src="@PartnerPokemon.AnimationState"
-                 style="grid-row: @(PartnerPokemon.GridRow + 1); grid-column: @(PartnerPokemon.GridColumn + 1);"
-                 alt="@PartnerPokemon.Name" />
-        </div>
-
-        <div>
-            <button @onclick="() => MovePartner(Direction.Up)">Up</button>
-            <button @onclick="() => MovePartner(Direction.UpLeft)">Up Left</button>
-            <button @onclick="() => MovePartner(Direction.UpRight)">Up Right</button>
-            <button @onclick="() => MovePartner(Direction.Left)">Left</button>
-            <button @onclick="() => MovePartner(Direction.Right)">Right</button>
-            <button @onclick="() => MovePartner(Direction.Down)">Down</button>
-            <button @onclick="() => MovePartner(Direction.DownLeft)">Down Left</button>
-            <button @onclick="() => MovePartner(Direction.DownRight)">Down Right</button>
-            <button @onclick="GoIdle">Idle</button>
-        </div>
-
-        <div>
-            <button @onclick="ExportData">Export Data</button>
-        </div>
-
+        <!-- Control Buttons Component -->
+        <ControlButtons OnMovePartner="MovePartner" OnGoIdle="GoIdle" OnExportData="ExportData" />
     }
     else
     {
@@ -60,76 +20,4 @@
     }
 </div>
 
-@code {
-    private Partner PartnerPokemon;
-    private int playgroundWidth;
-    private int playgroundHeight;
-    private int cellSize = 50;
-    private int numOfRows;
-    private int numOfColumns;
 
-    private DotNetObjectReference<Playground> dotNetHelper;
-
-    protected override void OnInitialized()
-    {
-        // load partner pokemon from AppState (localStorage -> appState)
-        PartnerPokemon = GameState.SaveData.PartnerPokemon;
-        dotNetHelper = DotNetObjectReference.Create(this);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            // ensure the resize observer is attached after the component is rendered
-            await JS.InvokeVoidAsync("observeElementSize", "playground-container", dotNetHelper);
-        }
-    }
-
-    [JSInvokable]
-    public void OnSizeChanged(int width, int height)
-    {
-        playgroundWidth = width;
-        playgroundHeight = height;
-
-        // calculate number of rows and columns based on container size
-        numOfRows = playgroundHeight / cellSize;
-        numOfColumns = playgroundWidth / cellSize;
-
-        // re-render after size changes
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        // cleanup the observer when the component is destroyed
-        if (dotNetHelper != null)
-        {
-            JS.InvokeVoidAsync("unobserveElementSize", "playground-container");
-            dotNetHelper.Dispose();
-        }
-    }
-
-    private void MovePartner(Direction direction)
-    {
-        PartnerPokemon.Walk(direction, numOfRows, numOfColumns); // pass grid bounds to limit movement
-        StateHasChanged(); // re-render component
-        GameState.SaveGameDataAsync();
-    }
-
-    private void GoIdle()
-    {
-        PartnerPokemon.AnimationState = "images/animations/idle.gif";
-        StateHasChanged();
-        GameState.SaveGameDataAsync();
-    }
-
-    private async Task ExportData()
-    {
-        // serialize the PartnerPokemon object to json
-        var jsonSaveData = System.Text.Json.JsonSerializer.Serialize(GameState.SaveData);
-
-        // js function for triggering the downloadFile function (defined in index.html)
-        await JS.InvokeVoidAsync("downloadFile", "pokeGotchiSaveData.json", jsonSaveData);
-    }
-}

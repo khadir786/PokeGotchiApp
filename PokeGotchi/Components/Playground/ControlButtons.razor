@@ -1,0 +1,21 @@
+﻿@using PokeGotchi.Models.Enums
+
+<div>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.Up)">Up</button>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.UpLeft)">Up Left</button>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.UpRight)">Up Right</button>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.Left)">Left</button>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.Right)">Right</button>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.Down)">Down</button>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.DownLeft)">Down Left</button>
+    <button @onclick="() => OnMovePartner.InvokeAsync(Direction.DownRight)">Down Right</button>
+    <button @onclick="() => OnGoIdle.InvokeAsync()">Idle</button>
+
+    <button @onclick="() => OnExportData.InvokeAsync()">Export Data</button>
+</div>
+
+@code {
+    [Parameter] public EventCallback<Direction> OnMovePartner { get; set; }
+    [Parameter] public EventCallback OnGoIdle { get; set; }
+    [Parameter] public EventCallback OnExportData { get; set; }
+}
