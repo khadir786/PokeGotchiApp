@@ -13,6 +13,7 @@ namespace PokeGotchi.Pages
         private int numOfColumns;
 
         private DotNetObjectReference<Playground> dotNetHelper;
+        private CancellationTokenSource _movementCancellationTokenSource;
 
         protected override void OnInitialized()
         {
@@ -45,15 +46,100 @@ namespace PokeGotchi.Pages
             numOfColumns = width / cellSize;
         }
 
-        private void MovePartner(Direction direction)
+        private async Task MovePartner(Direction direction)
         {
-            PartnerPokemon.Walk(direction, numOfRows, numOfColumns); // pass grid bounds to limit movement
+            PartnerPokemon.Walk(direction, numOfRows, numOfColumns);
+            StateHasChanged();
+
+            await Task.Delay(300);
+
+            // set to idle once the movement is done
+            PartnerPokemon.SetIdle();
             SaveAndRefresh();
+        }
+
+        private void MoveToTarget((int targetRow, int targetCol) target)
+        {
+            MoveTowardsTarget(target.targetRow, target.targetCol);
+        }
+
+
+        private async Task MoveTowardsTarget(int targetRow, int targetCol)
+        {
+            // cancel any ongoing movement if the player clicks on another cell
+            _movementCancellationTokenSource?.Cancel();
+
+            // create a new cancellation token source for the new movement task
+            _movementCancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = _movementCancellationTokenSource.Token;
+
+            Console.WriteLine($"Target row: {targetRow}, Target col: {targetCol}");
+
+            try
+            {
+                // loop until partner reaches target row and column OR the movement is cancelled
+                while ((PartnerPokemon.GridRow != targetRow || PartnerPokemon.GridColumn != targetCol) && !cancellationToken.IsCancellationRequested)
+                {
+                    Console.WriteLine($"Moving to Row: {PartnerPokemon.GridRow}, Col: {PartnerPokemon.GridColumn}");
+
+                    // prioritise diagonal movement first
+                    if (PartnerPokemon.GridRow < targetRow && PartnerPokemon.GridColumn < targetCol)
+                    {
+                        PartnerPokemon.Walk(Direction.DownRight, numOfRows, numOfColumns);
+                    }
+                    else if (PartnerPokemon.GridRow < targetRow && PartnerPokemon.GridColumn > targetCol)
+                    {
+                        PartnerPokemon.Walk(Direction.DownLeft, numOfRows, numOfColumns);
+                    }
+                    else if (PartnerPokemon.GridRow > targetRow && PartnerPokemon.GridColumn < targetCol)
+                    {
+                        PartnerPokemon.Walk(Direction.UpRight, numOfRows, numOfColumns);
+                    }
+                    else if (PartnerPokemon.GridRow > targetRow && PartnerPokemon.GridColumn > targetCol)
+                    {
+                        PartnerPokemon.Walk(Direction.UpLeft, numOfRows, numOfColumns);
+                    }
+                    else if (PartnerPokemon.GridRow < targetRow)
+                    {
+                        PartnerPokemon.Walk(Direction.Down, numOfRows, numOfColumns);
+                    }
+                    else if (PartnerPokemon.GridRow > targetRow)
+                    {
+                        PartnerPokemon.Walk(Direction.Up, numOfRows, numOfColumns);
+                    }
+                    else if (PartnerPokemon.GridColumn < targetCol)
+                    {
+                        PartnerPokemon.Walk(Direction.Right, numOfRows, numOfColumns);
+                    }
+                    else if (PartnerPokemon.GridColumn > targetCol)
+                    {
+                        PartnerPokemon.Walk(Direction.Left, numOfRows, numOfColumns);
+                    }
+
+                    // re-render the component after every step to reflect movement
+                    StateHasChanged();
+
+                    // delay to simulate waking time
+                    await Task.Delay(300, cancellationToken); // delay can be interrupted when cancelled 
+                }
+
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    Console.WriteLine("Target reached!!!!");
+                    PartnerPokemon.SetIdle();
+                    StateHasChanged();
+
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                Console.WriteLine("Movement canceled.");
+            }
         }
 
         private void GoIdle()
         {
-            PartnerPokemon.AnimationState = "images/animations/idle.gif";
+            PartnerPokemon.SetIdle();
             SaveAndRefresh();
         }
 

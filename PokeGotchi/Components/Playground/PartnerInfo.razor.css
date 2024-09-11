@@ -38,6 +38,15 @@
     top: 0;
 }
 
+#playground-current-mood {
+    text-align: center;
+}
+
+#playground-current-mood > p {
+    margin: 5px;
+
+}
+
 #playground-partner-stats-container {
     margin-top: 10px;
     border-radius: 10px;
