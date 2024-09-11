@@ -1,0 +1,35 @@
+﻿@using PokeGotchi.Models
+
+<div id="playground-container" style="grid-template-columns: repeat(@NumOfColumns, 50px); grid-template-rows: repeat(@NumOfRows, 50px);">
+    @for (int row = 0; row < NumOfRows; row++)
+    {
+        @for (int col = 0; col < NumOfColumns; col++)
+        {
+            // capture the current row and column
+            int currentRow = row;
+            int currentCol = col;
+            <div class="grid-cell" id="cell-@(currentRow)-@(currentCol)" @onclick="() => OnCellClick(currentRow, currentCol)">
+            </div>
+        }
+    }
+
+
+    <!--Pokemon sprite-->
+    <img id="pokemon-image"
+         src="@PartnerPokemon.AnimationState"
+         style="left: @(16 + PartnerPokemon.GridColumn * 50)px; top: @(16 + PartnerPokemon.GridRow * 50)px;"
+         alt="@PartnerPokemon.Name" />
+</div>
+
+@code {
+    [Parameter] public int NumOfRows { get; set; }
+    [Parameter] public int NumOfColumns { get; set; }
+    [Parameter] public Partner PartnerPokemon { get; set; }
+
+    [Parameter] public EventCallback<(int, int)> OnTargetCellClick { get; set; } // Pass the clicked cell as (row, col)
+
+    private async Task OnCellClick(int row, int col)
+    {
+        await OnTargetCellClick.InvokeAsync((row, col)); // Notify the parent component
+    }
+}
