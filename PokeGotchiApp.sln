@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeGotchi", "PokeGotchi\PokeGotchi.csproj", "{B294F0EC-5996-43EF-8DD4-A838342A86C7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeGotchiApp.Tests", "PokeGotchiApp.Tests\PokeGotchiApp.Tests.csproj", "{5FBA0A6A-716A-4137-9126-E901F813DFD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B294F0EC-5996-43EF-8DD4-A838342A86C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B294F0EC-5996-43EF-8DD4-A838342A86C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B294F0EC-5996-43EF-8DD4-A838342A86C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FBA0A6A-716A-4137-9126-E901F813DFD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FBA0A6A-716A-4137-9126-E901F813DFD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FBA0A6A-716A-4137-9126-E901F813DFD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FBA0A6A-716A-4137-9126-E901F813DFD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

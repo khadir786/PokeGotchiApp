@@ -1,4 +1,5 @@
-﻿@using PokeGotchi.Utils
+﻿@using PokeGotchi.Components
+@using PokeGotchi.Utils
 @inject AppState GameState
 @inject IJSRuntime JSRuntime
 
@@ -18,39 +19,32 @@
     </footer>
 </div>
 
-<!-- Modal overlay -->
+<!-- Modal component -->
 @if (isModalOpen)
 {
-    // two modals because the animation makes the modal's dark background slide in
-    // one modal with background, one without
-    <div class="modal-overlay animate__animated @modalOverlayClass"></div>
-    <div class="modal-overlay animate__animated @modalContentClass" style="background: none">
-        <div class="modal-content">
-            <h2>Import Save File</h2>
-            <p>Import a JSON save file here:</p>
-            <InputFile OnChange="Import" />
-            @if (!string.IsNullOrEmpty(errorMessage))
-            {
-                <div class="error-message">
-                    @errorMessage
-                </div>
-            }
-
-            <button @onclick="CloseModal">Close</button>
-        </div>
-    </div>
+    <Modal
+        Title="Import Save File"
+        Content="Import a JSON save file here:"
+        ShowFileInput="true"
+        ErrorMessage="@errorMessage"
+        SuccessMessage="@successMessage"
+        ModalOverlayClass="@modalOverlayClass"
+        ModalContentClass="@modalContentClass"
+        OnClose="CloseModal"
+        OnFileSelected="Import" />
 }
 
 @code {
+    private string playButtonClass = "";
+    private string containerAnimatedClass = "animate__animated animate__fadeIn";
+    
+    private string importClass = "";
+    
     private bool isModalOpen = false;
     private string modalOverlayClass = "animate__fadeIn";
     private string modalContentClass = "animate__fadeInDownBig";
-    private string playButtonClass = "";
-    private string importClass = "";
-    private string containerAnimatedClass = "animate__animated animate__fadeIn";
-
     private string errorMessage = "";
-
+    private string successMessage = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,6 +74,7 @@
         modalContentClass = "animate__fadeOutUpBig";
         importClass = "";
         errorMessage = "";
+        successMessage = "";
 
         // wait for the animation to complete
         await Task.Delay(500);
@@ -90,7 +85,6 @@
     private async Task Import(InputFileChangeEventArgs e)
     {
         var file = e.File;
-
 
         if (file != null)
         {
@@ -120,7 +114,7 @@
                         }
 
                         // passed validation checks
-                        errorMessage = "";
+                        successMessage = "Save data imported successfully";
                         GameState.SaveData = saveData;
                         await GameState.SaveGameDataAsync();  // overwrite localStorage
 
@@ -129,22 +123,17 @@
                     catch (Exception)
                     {
                         errorMessage = "The uploaded JSON file has an invalid structure";
-
                     }
                 }
             }
             catch (IOException ex)
             {
                 errorMessage = $"File size exceeds the allowed limit - {ex.Message}";
-                throw;
             }
-            // catch-all
             catch (Exception ex)
             {
                 errorMessage = $"An error occurred while uploading the file: {ex.Message}";
             }
-
         }
     }
-
 }

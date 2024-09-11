@@ -13,8 +13,8 @@ public class Partner : Pokemon
     private int _energy;
     public Mood CurrentMood { get; set; }
 
-    public int XPos { get; set; }
-    public int YPos { get; set; }
+    public int GridRow { get; set; }
+    public int GridColumn { get; set; }
 
     public int Happiness
     {
@@ -60,12 +60,13 @@ public class Partner : Pokemon
     // animation state represents the path of a gif
     public string AnimationState { get; set; }
 
-    public Partner(string species, string name, int xPos, int yPos, int happiness = 0, int friendship = 10, int hunger = 60, int energy = 55)
+    public Partner(string species, string name, int gridRow, int gridColumn, int happiness = 0, int friendship = 10, int hunger = 60, int energy = 55)
     {
         this.Species = species;
         this.Name = name;
-        this.XPos = xPos;
-        this.YPos = yPos;
+        this.GridRow = gridRow;
+        this.GridColumn = gridColumn;
+        
         // can still have a random Happiness value if none is provided but also allow control over it if needed
         this.Happiness = happiness == 0 ? Random.Shared.Next(15, 30) : happiness;
         this.Friendship = friendship;
@@ -86,55 +87,50 @@ public class Partner : Pokemon
     }
 
 
-    public override void Walk(int x, int y, Direction direction)
+    public override void Walk(Direction direction, int numRows, int numColumns)
     {
-        // Update the XPos and YPos based on direction
+        // Move the partner by adjusting gridRow and gridColumn based on the direction
         switch (direction)
         {
             case Direction.Up:
-                YPos -= y;
+                if (GridRow > 0) GridRow--;
                 AnimationState = "images/animations/walks/walk-up.gif";
                 break;
             case Direction.Down:
-                YPos += y;
+                if (GridRow < numRows - 1) GridRow++;
                 AnimationState = "images/animations/walks/walk-down.gif";
                 break;
             case Direction.Left:
-                XPos -= x;
+                if (GridColumn > 0) GridColumn--;
                 AnimationState = "images/animations/walks/walk-left.gif";
                 break;
             case Direction.Right:
-                XPos += x;
+                if (GridColumn < numColumns - 1) GridColumn++;
                 AnimationState = "images/animations/walks/walk-right.gif";
                 break;
             case Direction.UpRight:
-                XPos += x;
-                YPos -= y;
+                if (GridRow > 0) GridRow--;
+                if (GridColumn < numColumns - 1) GridColumn++;
                 AnimationState = "images/animations/walks/walk-up-right.gif";
                 break;
-            case Direction.DownRight:
-                XPos += x;
-                YPos += y;
-                AnimationState = "images/animations/walks/walk-down-right.gif";
-                break;
             case Direction.UpLeft:
-                XPos -= x;
-                YPos -= y;
+                if (GridRow > 0) GridRow--;
+                if (GridColumn > 0) GridColumn--;
                 AnimationState = "images/animations/walks/walk-up-left.gif";
                 break;
+            case Direction.DownRight:
+                if (GridRow < numRows - 1) GridRow++;
+                if (GridColumn < numColumns - 1) GridColumn++;
+                AnimationState = "images/animations/walks/walk-down-right.gif";
+                break;
             case Direction.DownLeft:
-                XPos -= x;
-                YPos += y;
+                if (GridRow < numRows - 1) GridRow++;
+                if (GridColumn > 0) GridColumn--;
                 AnimationState = "images/animations/walks/walk-down-left.gif";
                 break;
         }
     }
 
-    public override void Run(int x, int y, Direction direction)
-    {
-        // Running logic could be a faster version of Walk
-        Walk(x * 2, y * 2, direction);
-    }
 
 
 

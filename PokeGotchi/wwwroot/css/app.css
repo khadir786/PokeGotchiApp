@@ -181,3 +181,9 @@ body {
     font-weight: bold;
     margin: 10px;
 }
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin: 10px;
+}

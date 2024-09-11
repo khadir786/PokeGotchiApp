@@ -7,8 +7,7 @@ namespace PokeGotchi.Models
         public string Species { get; set; }
         public bool isMoving;
 
-        public abstract void Walk(int x, int y, Direction direction);
+        public abstract void Walk(Direction direction, int numRows, int numColumns);
 
-        public abstract void Run(int x, int y, Direction direction);
     }
 }

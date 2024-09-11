@@ -1,0 +1,51 @@
+﻿<div class="modal-overlay animate__animated @ModalOverlayClass"></div>
+<div class="modal-overlay animate__animated @ModalContentClass" style="background: none">
+    <div class="modal-content">
+        <h2>@Title</h2>
+        <p>@Content</p>
+
+        @if (ShowFileInput)
+        {
+            <InputFile OnChange="OnFileSelected" />
+        }
+
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="error-message">
+                @ErrorMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(SuccessMessage))
+        {
+            <div class="success-message">
+                @SuccessMessage
+            </div>
+        }
+
+        <button @onclick="Close">Close</button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Content { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback<InputFileChangeEventArgs> OnFileSelected { get; set; }
+    [Parameter] public bool ShowFileInput { get; set; } = false;
+
+    [Parameter] public string ModalOverlayClass { get; set; } = "animate__fadeIn";
+    [Parameter] public string ModalContentClass { get; set; } = "animate__fadeInDownBig";
+
+    [Parameter] public string ErrorMessage { get; set; } = "";
+    [Parameter] public string SuccessMessage { get; set; } = "";
+
+    private async Task Close()
+    {
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+
+}
