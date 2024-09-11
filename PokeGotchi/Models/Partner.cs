@@ -89,6 +89,8 @@ public class Partner : Pokemon
 
     public override void Walk(Direction direction, int numRows, int numColumns)
     {
+        IsMoving = true;
+
         // Move the partner by adjusting gridRow and gridColumn based on the direction
         switch (direction)
         {
@@ -133,7 +135,11 @@ public class Partner : Pokemon
 
 
 
-
+    public void SetIdle()
+    {
+        IsMoving = false;
+        AnimationState = "images/animations/idle.gif";
+    }
     public void Eat(Food food)
     {
         Hunger += food.NutritionValue;

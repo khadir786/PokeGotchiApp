@@ -47,16 +47,19 @@ namespace PokeGotchi.Pages
 
         private async Task MovePartner(Direction direction)
         {
-            PartnerPokemon.Walk(direction, numOfRows, numOfColumns); // pass grid bounds to limit movement
-            SaveAndRefresh();
+            PartnerPokemon.Walk(direction, numOfRows, numOfColumns);
+            StateHasChanged();
 
-            await Task.Delay(300);
-            GoIdle();
+            await Task.Delay(300); 
+
+            // set to idle once the movement is done
+            PartnerPokemon.SetIdle();
+            SaveAndRefresh();
         }
 
         private void GoIdle()
         {
-            PartnerPokemon.AnimationState = "images/animations/idle.gif";
+            PartnerPokemon.SetIdle();
             SaveAndRefresh();
         }
 
