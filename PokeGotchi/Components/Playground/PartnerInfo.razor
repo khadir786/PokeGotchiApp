@@ -1,4 +1,5 @@
 ﻿@using PokeGotchi.Models
+@using PokeGotchi.Models.Enums
 
 <div id="playground-partner-info">
 
@@ -7,16 +8,19 @@
         <img id="playground-current-state-sprite" src="@PartnerPokemon.AnimationState" />
         <p id="playground-partner-name">@PartnerPokemon.Name</p>
     </div>
+    
+    <div id="playground-current-mood">
+        <p>Mood</p>
+        <p>@PartnerPokemon.CurrentMood</p>
+    </div>
 
     <!--Stats-->
     <div id="playground-partner-stats-container">
-        @foreach (KeyValuePair<string, int> stat in PartnerPokemon.Stats)
+        @foreach (KeyValuePair<Stats, int> stat in PartnerPokemon.Stats)
         {
             <p>@stat.Key</p>
             <p> @stat.Value</p>
         }
-        <p>Mood</p>
-        <p>@PartnerPokemon.CurrentMood</p>
     </div>
 </div>
 
