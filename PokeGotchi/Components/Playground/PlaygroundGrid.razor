@@ -1,0 +1,24 @@
+﻿@using PokeGotchi.Models
+
+<div id="playground-container" style="grid-template-columns: repeat(@NumOfColumns, 50px); grid-template-rows: repeat(@NumOfRows, 50px);">
+    @for (int row = 0; row < NumOfRows; row++)
+    {
+        @for (int col = 0; col < NumOfColumns; col++)
+        {
+            <div class="grid-cell"></div>
+        }
+    }
+
+    <!--Pokemon sprite-->
+    <img id="pokemon-image"
+         src="@PartnerPokemon.AnimationState"
+         style="grid-row: @(PartnerPokemon.GridRow + 1); grid-column: @(PartnerPokemon.GridColumn + 1);"
+         alt="@PartnerPokemon.Name" />
+</div>
+
+@code {
+    [Parameter] public int NumOfRows { get; set; }
+    [Parameter] public int NumOfColumns { get; set; }
+    [Parameter] public Partner PartnerPokemon { get; set; }
+
+}
