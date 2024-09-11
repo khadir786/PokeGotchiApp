@@ -45,10 +45,13 @@ namespace PokeGotchi.Pages
             numOfColumns = width / cellSize;
         }
 
-        private void MovePartner(Direction direction)
+        private async Task MovePartner(Direction direction)
         {
             PartnerPokemon.Walk(direction, numOfRows, numOfColumns); // pass grid bounds to limit movement
             SaveAndRefresh();
+
+            await Task.Delay(300);
+            GoIdle();
         }
 
         private void GoIdle()

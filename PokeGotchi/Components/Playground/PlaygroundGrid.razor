@@ -12,9 +12,10 @@
     <!--Pokemon sprite-->
     <img id="pokemon-image"
          src="@PartnerPokemon.AnimationState"
-         style="grid-row: @(PartnerPokemon.GridRow + 1); grid-column: @(PartnerPokemon.GridColumn + 1);"
+         style="left: @(16 + PartnerPokemon.GridColumn * 50)px; top: @(16 + PartnerPokemon.GridRow * 50)px;"
          alt="@PartnerPokemon.Name" />
 </div>
+
 
 @code {
     [Parameter] public int NumOfRows { get; set; }
