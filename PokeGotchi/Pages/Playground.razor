@@ -22,10 +22,10 @@
             </div>
         </div>
 
-        <div id="playground-container">
-            @for (int row = 0; row < numOfRows; row++) // Adjust rows count as needed
+        <div id="playground-container" style="grid-template-columns: repeat(@numOfColumns, 50px); grid-template-rows: repeat(@numOfRows, 50px);">
+            @for (int row = 0; row < numOfRows; row++)
             {
-                @for (int col = 0; col < numOfColumns; col++) // Adjust columns count as needed
+                @for (int col = 0; col < numOfColumns; col++)
                 {
                     <div class="grid-cell"></div>
                 }
@@ -33,7 +33,7 @@
 
             <img id="pokemon-image"
                  src="@PartnerPokemon.AnimationState"
-                 style="position: relative; left: @(PartnerPokemon.XPos)px; top: @(PartnerPokemon.YPos)px; "
+                 style="grid-row: @(PartnerPokemon.GridRow + 1); grid-column: @(PartnerPokemon.GridColumn + 1);"
                  alt="@PartnerPokemon.Name" />
         </div>
 
@@ -64,11 +64,10 @@
     private Partner PartnerPokemon;
     private int playgroundWidth;
     private int playgroundHeight;
-    private int playgroundArea;
+    private int cellSize = 50;
     private int numOfRows;
     private int numOfColumns;
-    
-    
+
     private DotNetObjectReference<Playground> dotNetHelper;
 
     protected override void OnInitialized()
@@ -92,19 +91,12 @@
     {
         playgroundWidth = width;
         playgroundHeight = height;
-        playgroundArea = width * height;
 
-        numOfRows = playgroundWidth / 50;
-        numOfColumns = playgroundHeight / 50;
+        // calculate number of rows and columns based on container size
+        numOfRows = playgroundHeight / cellSize;
+        numOfColumns = playgroundWidth / cellSize;
 
-
-        
-        
-
-        Console.WriteLine("width: " + playgroundWidth);
-        Console.WriteLine("height: " + playgroundHeight);
-
-        // force re-rendering after size changes
+        // re-render after size changes
         StateHasChanged();
     }
 
@@ -120,7 +112,7 @@
 
     private void MovePartner(Direction direction)
     {
-        PartnerPokemon.Walk(direction);
+        PartnerPokemon.Walk(direction, numOfRows, numOfColumns); // pass grid bounds to limit movement
         StateHasChanged(); // re-render component
         GameState.SaveGameDataAsync();
     }
@@ -140,5 +132,4 @@
         // js function for triggering the downloadFile function (defined in index.html)
         await JS.InvokeVoidAsync("downloadFile", "pokeGotchiSaveData.json", jsonSaveData);
     }
-
 }

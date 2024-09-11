@@ -112,4 +112,8 @@
 #pokemon-image {
     image-rendering: pixelated;
     scale: 2;
+    transition: grid-row 0.3s, grid-column 0.3s;
+    position: relative;
+    left: 16px;
+    top: 16px;
 }
