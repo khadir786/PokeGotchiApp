@@ -57,6 +57,68 @@ namespace PokeGotchi.Pages
             SaveAndRefresh();
         }
 
+        private void MoveToTarget((int targetRow, int targetCol) target)
+        {
+            MoveTowardsTarget(target.targetRow, target.targetCol);
+        }
+
+
+        private async Task MoveTowardsTarget(int targetRow, int targetCol)
+        {
+            Console.WriteLine($"Target row: {targetRow}, Target col: {targetCol}");
+
+            // loop until the partner reaches the target row and column
+            while (PartnerPokemon.GridRow != targetRow || PartnerPokemon.GridColumn != targetCol)
+            {
+                Console.WriteLine($"Moving to Row: {PartnerPokemon.GridRow}, Col: {PartnerPokemon.GridColumn}");
+
+                // prioritise diagonal movement first
+                if (PartnerPokemon.GridRow < targetRow && PartnerPokemon.GridColumn < targetCol)
+                {
+                    PartnerPokemon.Walk(Direction.DownRight, numOfRows, numOfColumns);
+                }
+                else if (PartnerPokemon.GridRow < targetRow && PartnerPokemon.GridColumn > targetCol)
+                {
+                    PartnerPokemon.Walk(Direction.DownLeft, numOfRows, numOfColumns);
+                }
+                else if (PartnerPokemon.GridRow > targetRow && PartnerPokemon.GridColumn < targetCol)
+                {
+                    PartnerPokemon.Walk(Direction.UpRight, numOfRows, numOfColumns);
+                }
+                else if (PartnerPokemon.GridRow > targetRow && PartnerPokemon.GridColumn > targetCol)
+                {
+                    PartnerPokemon.Walk(Direction.UpLeft, numOfRows, numOfColumns);
+                }
+                // no diagonal option
+                else if (PartnerPokemon.GridRow < targetRow)
+                {
+                    PartnerPokemon.Walk(Direction.Down, numOfRows, numOfColumns);
+                }
+                else if (PartnerPokemon.GridRow > targetRow)
+                {
+                    PartnerPokemon.Walk(Direction.Up, numOfRows, numOfColumns);
+                }
+                else if (PartnerPokemon.GridColumn < targetCol)
+                {
+                    PartnerPokemon.Walk(Direction.Right, numOfRows, numOfColumns);
+                }
+                else if (PartnerPokemon.GridColumn > targetCol)
+                {
+                    PartnerPokemon.Walk(Direction.Left, numOfRows, numOfColumns);
+                }
+
+                // re-render the component after every step to reflect movement
+                StateHasChanged();
+
+                // delay to simulate waking time
+                await Task.Delay(400);
+            }
+
+            Console.WriteLine("Target reached!!!!");
+            PartnerPokemon.SetIdle();
+            StateHasChanged();
+        }
+
         private void GoIdle()
         {
             PartnerPokemon.SetIdle();

@@ -5,9 +5,14 @@
     {
         @for (int col = 0; col < NumOfColumns; col++)
         {
-            <div class="grid-cell"></div>
+            // capture the current row and column
+            int currentRow = row;
+            int currentCol = col;
+            <div class="grid-cell" id="cell-@(currentRow)-@(currentCol)" @onclick="() => OnCellClick(currentRow, currentCol)">
+            </div>
         }
     }
+
 
     <!--Pokemon sprite-->
     <img id="pokemon-image"
@@ -16,10 +21,15 @@
          alt="@PartnerPokemon.Name" />
 </div>
 
-
 @code {
     [Parameter] public int NumOfRows { get; set; }
     [Parameter] public int NumOfColumns { get; set; }
     [Parameter] public Partner PartnerPokemon { get; set; }
 
+    [Parameter] public EventCallback<(int, int)> OnTargetCellClick { get; set; } // Pass the clicked cell as (row, col)
+
+    private async Task OnCellClick(int row, int col)
+    {
+        await OnTargetCellClick.InvokeAsync((row, col)); // Notify the parent component
+    }
 }

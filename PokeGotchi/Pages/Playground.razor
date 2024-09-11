@@ -9,7 +9,12 @@
         <PartnerInfo PartnerPokemon="@PartnerPokemon" />
 
         <!-- Playground Grid Component -->
-        <PlaygroundGrid NumOfRows="@numOfRows" NumOfColumns="@numOfColumns" PartnerPokemon="@PartnerPokemon" />
+        <PlaygroundGrid 
+            NumOfRows="@numOfRows" 
+            NumOfColumns="@numOfColumns" 
+            PartnerPokemon="@PartnerPokemon" 
+            OnTargetCellClick="MoveToTarget" />
+
 
         <!-- Control Buttons Component -->
         <ControlButtons OnMovePartner="MovePartner" OnGoIdle="GoIdle" OnExportData="ExportData" />
