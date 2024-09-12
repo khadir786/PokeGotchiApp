@@ -11,8 +11,8 @@ PokeGotchi is a standalone WebAssembly app made with Blazor. It is a game inspir
 
 #### **01/09/2024**
 - Now redirects user to play screen when program starts
-- Changed the project to use a one-page model where the game does not direct the user to another page
-Instead, each screen component is rendered based on the AppState's `GameScreen` property
+- Changed the project to use a one-page model where the game does not direct the user to another page.
+  Instead, each screen component is rendered based on the AppState's `GameScreen` property
 - Created an event that fires whenever the `GameScreen` property is changed. When it is fired, the `StateHasChanged` Blazor method is invoked, causing the main component to re-render
 
 #### **05/09/2024**
