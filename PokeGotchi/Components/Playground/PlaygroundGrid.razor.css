@@ -25,6 +25,10 @@
     background-color: #9E7B58; /* Lighter shade of the base background color */
 }
 
+.active-cell {
+    background-color: #9E7B58; 
+}
+
 
 #pokemon-image {
     image-rendering: pixelated;

@@ -127,7 +127,7 @@ namespace PokeGotchi.Pages
                 {
                     Console.WriteLine("Target reached!!!!");
                     PartnerPokemon.SetIdle();
-                    StateHasChanged();
+                    SaveAndRefresh();
 
                 }
             }
