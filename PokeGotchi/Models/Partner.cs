@@ -8,6 +8,7 @@ public class Partner : Pokemon
     public string Name { get; set; } = "Riolu";
     public Dictionary<Stats, int> Stats { get; set; } = new();
     public Mood CurrentMood { get; set; }
+    public FavGummi
 
     public int GridRow { get; set; }
     public int GridColumn { get; set; }
