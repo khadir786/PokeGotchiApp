@@ -59,10 +59,17 @@ Instead, each screen component is rendered based on the AppState's `GameScreen` 
 
   ![walk-click-demo](https://github.com/user-attachments/assets/345797a5-7b8e-40a8-aa11-e48464c09913)
 
+#### **12/09/2024**
+- Added ability to 'pick up' Partner Pokemon and move to another cell (will decrease happiness)
+- Redesigned Partner Information UI
+
+![dragging-demo-resize](https://github.com/user-attachments/assets/c36af887-0208-4210-8270-5f3d47d4e662)
 
 
 All sprites and animations are the property of Nintendo and have been sourced from https://sprites.pmdcollab.org/
 
 
 Credits to: https://github.com/PMDCollab/SpriteCollab/blob/master/credit_names.txt
+
+
 
