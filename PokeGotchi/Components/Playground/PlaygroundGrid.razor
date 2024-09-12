@@ -1,7 +1,11 @@
 ﻿@using PokeGotchi.Models
+@using PokeGotchi.Models.Enums
+@inject IJSRuntime JS
 
 <div id="playground-container" style="grid-template-columns: repeat(@NumOfColumns, 50px); grid-template-rows: repeat(@NumOfRows, 50px);">
-    
+
+    <button @onclick="TogglePickUpMode">Pick Up</button>
+
     <!--Cells (amount generated based on container size)-->
     @for (int row = 0; row < NumOfRows; row++)
     {
@@ -20,8 +24,9 @@
     <!--Pokemon sprite-->
     <img id="pokemon-image"
          src="@PartnerPokemon.AnimationState"
-         style="left: @(16 + PartnerPokemon.GridColumn * 50)px; top: @(16 + PartnerPokemon.GridRow * 50)px;"
-         alt="@PartnerPokemon.Name"/>
+         style="left: @(16 + PartnerPokemon.GridColumn * 50)px; top: @(16 + PartnerPokemon.GridRow * 50)px; visibility: @(isDragging ? "hidden" : "visible")"
+         alt="@PartnerPokemon.Name"
+         @onclick="OnPartnerClick" />
 </div>
 
 @code {
@@ -30,24 +35,78 @@
     [Parameter] public Partner PartnerPokemon { get; set; }
 
     [Parameter] public EventCallback<(int, int)> OnTargetCellClick { get; set; } // Pass the clicked cell as (row, col)
+    [Parameter] public EventCallback<(int, int)> OnSaveAndRefresh { get; set; } //
 
-    // track the clicked cell (default int is 0 - would conflict with actual rows and cols)
+    // track the active cell (default int is 0 - would conflict with actual rows and cols)
     private int clickedRow = -1;
     private int clickedCol = -1;
-
-    private async Task OnCellClick(int row, int col)
-    {
-        clickedRow = row;
-        clickedCol = col;
-
-        await OnTargetCellClick.InvokeAsync((row, col));
-
-        StateHasChanged();
-    }
 
     // check if a cell is the clicked one
     private bool IsCellClicked(int row, int col)
     {
         return row == clickedRow && col == clickedCol;
     }
+
+    private bool isDragging = false;
+
+    private async Task TogglePickUpMode()
+    {
+        PartnerPokemon.TogglePickUpable();
+
+        if (PartnerPokemon.GetPickUpableState())
+        {
+            // Change cursor to grab-hand.png when pick-up mode is active
+            await JS.InvokeVoidAsync("changeCursor", "images/grab-hand.png");
+        }
+        else
+        {
+            // Reset cursor when pick-up mode is inactive
+            await JS.InvokeVoidAsync("resetCursor");
+        }
+    }
+
+    private async Task OnPartnerClick()
+    {
+        if (PartnerPokemon.GetPickUpableState())
+        {
+            isDragging = true;
+            PartnerPokemon.PickUp(); // change animation state
+            await OnSaveAndRefresh.InvokeAsync(); // sync it to other components
+
+            await JS.InvokeVoidAsync("changeCursor", "images/dragging.gif");
+        }
+    }
+
+    private async Task OnCellClick(int row, int col)
+    {
+        if (isDragging)
+        {
+            clickedRow = row;
+            clickedCol = col;
+
+            // place the partner down at the clicked cell
+            PartnerPokemon.PlaceDown(row, col + 1);
+            StateHasChanged();
+
+
+            // reset dragging state and cursor
+            isDragging = false;
+            PartnerPokemon.TogglePickUpable(); // Disable pick-up mode
+            await JS.InvokeVoidAsync("resetCursor");
+            await OnSaveAndRefresh.InvokeAsync();
+
+
+
+        }
+        else
+        {
+            clickedRow = row;
+            clickedCol = col;
+
+            await OnTargetCellClick.InvokeAsync((row, col + 1));
+
+            StateHasChanged();
+        }
+    }
+
 }

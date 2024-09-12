@@ -1,4 +1,5 @@
-﻿using PokeGotchi.Models.Enums;
+﻿using System.Reflection.Metadata;
+using PokeGotchi.Models.Enums;
 
 namespace PokeGotchi.Models;
 
@@ -13,6 +14,8 @@ public class Partner : Pokemon
 
     // animation state represents the path of a gif
     public string AnimationState { get; set; }
+
+    private bool isPickUpable = false;
 
     public Partner()
     {
@@ -79,6 +82,32 @@ public class Partner : Pokemon
                 AnimationState = "images/animations/walks/walk-down-left.gif";
                 break;
         }
+    }
+
+    public void TogglePickUpable()
+    {
+        isPickUpable = !isPickUpable;
+    }
+
+    public override void PickUp()
+    {
+        if (isPickUpable)
+        {
+            AnimationState = "images/animations/losing-balance.gif";
+            Stats[Enums.Stats.Happiness] -= 3;
+        }
+    }
+
+    public bool GetPickUpableState()
+    {
+        return isPickUpable;
+    }
+
+    public override void PlaceDown(int gridRow, int gridColumn)
+    {
+        GridRow = gridRow;
+        GridColumn = gridColumn;
+        SetIdle();
     }
 
     public void SetIdle()
