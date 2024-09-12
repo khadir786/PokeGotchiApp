@@ -6,5 +6,6 @@
         Friendship,
         Hunger,
         Energy,
+        Experience
     }
 }

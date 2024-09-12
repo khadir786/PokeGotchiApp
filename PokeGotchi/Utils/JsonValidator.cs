@@ -31,7 +31,8 @@ namespace PokeGotchi.Utils
                    saveData.PartnerPokemon.Stats.ContainsKey(Stats.Happiness) &&
                    saveData.PartnerPokemon.Stats.ContainsKey(Stats.Friendship) &&
                    saveData.PartnerPokemon.Stats.ContainsKey(Stats.Hunger) &&
-                   saveData.PartnerPokemon.Stats.ContainsKey(Stats.Energy);
+                   saveData.PartnerPokemon.Stats.ContainsKey(Stats.Energy) &&
+                   saveData.PartnerPokemon.Stats.ContainsKey(Stats.Experience);
         }
     }
 }

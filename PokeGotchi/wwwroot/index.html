@@ -84,6 +84,15 @@
         }
     </script>
 
+    <script>
+        function changeCursor(cursorImage) {
+            document.body.style.cursor = `url(${cursorImage}), auto`;
+        }
+
+        function resetCursor() {
+            document.body.style.cursor = 'default';
+        }
+    </script>
 
 
     <script src="_framework/blazor.webassembly.js"></script>
