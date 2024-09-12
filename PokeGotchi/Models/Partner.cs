@@ -30,6 +30,7 @@ public class Partner : Pokemon
         Stats[Enums.Stats.Friendship] = 10;
         Stats[Enums.Stats.Hunger] = 60;
         Stats[Enums.Stats.Energy] = 55;
+        Stats[Enums.Stats.Experience] = 0;
 
         // random starting mood between angry, playful and wary
         Mood[] possibleMoods = { Mood.Angry, Mood.Playful, Mood.Wary };
