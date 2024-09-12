@@ -1,6 +1,7 @@
 # PokeGotchiApp
 PokeGotchi is a standalone WebAssembly app made with Blazor. It is a game inspired by Tamogatchi and Pokemon.
 
+
 ## Changelog
 #### **31/08/2024**
 - Created base play Screen, added riolu animation 
@@ -59,4 +60,9 @@ Instead, each screen component is rendered based on the AppState's `GameScreen` 
   ![walk-click-demo](https://github.com/user-attachments/assets/345797a5-7b8e-40a8-aa11-e48464c09913)
 
 
+
+All sprites and animations are the property of Nintendo and have been sourced from https://sprites.pmdcollab.org/
+
+
+Credits to: https://github.com/PMDCollab/SpriteCollab/blob/master/credit_names.txt
 
