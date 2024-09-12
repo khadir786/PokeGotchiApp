@@ -43,8 +43,20 @@ Instead, each screen component is rendered based on the AppState's `GameScreen` 
   
   ![import-demo-resized](https://github.com/user-attachments/assets/5b1f7d25-561c-4a95-bed5-26ab25fb40c0)
 
+#### **10/09/2024**
+- Added grid container for playground
+- Made number of cells fit the area of container
+- Added bounds to the container (Partner Pokemon cannot move outside of them)
+
+#### **11/09/2024**
+- Partner Pokemon now slides across cells instead of snapping to them
+- Placed the mood attribute in between the current state container and stats container
+- Made a pathfinding algorithm where the user can click on a cell and the Partner sprite will move towards it
+- The player can now interrupt the Partner Pokemon's current movement to a cell to another cell with a another cell click
+- Made the cell the player clicks last the active cell with a background indicating so
 
 
+  ![walk-click-demo](https://github.com/user-attachments/assets/345797a5-7b8e-40a8-aa11-e48464c09913)
 
 
 
