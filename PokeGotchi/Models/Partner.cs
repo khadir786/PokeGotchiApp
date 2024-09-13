@@ -31,11 +31,11 @@ public class Partner : Pokemon
         this.AnimationState = "images/animations/idle.gif";
 
         // set random favourite and hated gummi
-        Array gummiColors = Enum.GetValues(typeof(GummiColour));
+        Array gummiColours = Enum.GetValues(typeof(GummiColour));
         var random = new Random();
 
         // set the favourite gummi
-        GummiColour favouriteGummiColour = (GummiColour)gummiColors.GetValue(random.Next(gummiColors.Length));
+        GummiColour favouriteGummiColour = (GummiColour)gummiColours.GetValue(random.Next(gummiColours.Length));
         this.FavouriteGummi = new Gummi(favouriteGummiColour);
 
         GummiColour hatedGummiColour;
@@ -43,7 +43,7 @@ public class Partner : Pokemon
         // do-while loop ensures hated gummi is not the same as favourite gummi
         do
         {
-            hatedGummiColour = (GummiColour)gummiColors.GetValue(random.Next(gummiColors.Length));
+            hatedGummiColour = (GummiColour)gummiColours.GetValue(random.Next(gummiColours.Length));
         }
         while (hatedGummiColour == favouriteGummiColour);
 

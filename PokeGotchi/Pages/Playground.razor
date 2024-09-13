@@ -6,7 +6,7 @@
     @if (PartnerPokemon != null)
     {
         <!-- Partner Info Component -->
-        <PartnerInfo PartnerPokemon="@PartnerPokemon" />
+        <PartnerInfo PartnerPokemon="@PartnerPokemon" Player="@Player" OnSaveAndRefresh="SaveAndRefresh"/>
 
         <!-- Playground Grid Component -->
         <PlaygroundGrid NumOfRows="@numOfRows"

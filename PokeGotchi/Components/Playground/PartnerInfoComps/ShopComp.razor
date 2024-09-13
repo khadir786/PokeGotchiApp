@@ -1,0 +1,70 @@
+﻿@using PokeGotchi.Models
+@inject AppState GameState
+
+<div id="shop-container">
+    <div id="shop-heading">
+        <p>Shop</p>
+        <p><span><img src="images/pokedollar.png" /></span> @Player.Money</p>
+    </div>
+    
+    <div class="shop-grid">
+        @foreach (var item in Shop.CurrentItems)
+        {
+            <div class="grid-cell @(enoughFunds ? "" : "no-funds")" @onclick="() => BuyItem(item)">
+                <img src="@item.Image" alt="@item.Name" />
+            </div>
+        }
+        <!-- Cycle Button -->
+        <div class="grid-cell @(enoughFunds ? "" : "no-funds")">
+            <img src="images/refresh.png" style="height: 50px; width: 40px;" @onclick="CycleItems" />
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Shop Shop { get; set; }
+    [Parameter] public Player Player { get; set; }
+    [Parameter] public Inventory Inventory { get; set; }
+    [Parameter] public EventCallback OnSaveAndRefresh { get; set; }
+
+    private bool enoughFunds;
+
+    protected override void OnInitialized()
+    {
+        enoughFunds = true;
+    }
+
+    private async Task BuyItem(Item item)
+    {
+        if (Player.Money >= item.BuyValue)
+        {
+            enoughFunds = true;
+            Player.Money -= item.BuyValue;
+            Inventory.AddItem(item);
+        }
+        else
+        {
+            enoughFunds = false;
+            Console.WriteLine("Not enough funds");
+        }
+
+        await OnSaveAndRefresh.InvokeAsync();
+    }
+
+    private async Task CycleItems()
+    {
+        if (Player.Money >= 5)
+        {
+            enoughFunds = true;
+            Player.Money -= 5;
+            Shop.CycleItems();
+            await OnSaveAndRefresh.InvokeAsync();
+
+        }
+        else
+        {
+            enoughFunds = false;
+            Console.WriteLine("Not enough funds");
+        }
+    }
+}

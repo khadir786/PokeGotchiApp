@@ -9,9 +9,9 @@ namespace PokeGotchi.Models.Items.Foods
         public Gummi(GummiColour colour)
         {
             this.Name = $"{colour} Gummi";
-            this.Image = $"images/items/food/gummis/{colour.ToString().ToLower()}-gummi.png";
-            this.BuyValue = 50;
-            this.SellValue = 25;
+            this.Image = $"images/items/food/gummi/{colour.ToString().ToLower()}-gummi.png";
+            this.BuyValue = 25;
+            this.SellValue = 18;
             this.NutritionValue = 20; // Example nutrition value, adjust as needed
             this.Colour = colour;
         }

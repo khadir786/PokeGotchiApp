@@ -8,6 +8,7 @@ namespace PokeGotchi.Pages
     public partial class Playground
     {
         private Partner PartnerPokemon;
+        private Player Player;
         private int cellSize = 50;
         private int numOfRows;
         private int numOfColumns;
@@ -19,6 +20,7 @@ namespace PokeGotchi.Pages
         {
             // load partner Pokémon from AppState
             PartnerPokemon = GameState.SaveData.PartnerPokemon;
+            Player = GameState.SaveData.Player;
             dotNetHelper = DotNetObjectReference.Create(this); // needed for resize observer
         }
 
