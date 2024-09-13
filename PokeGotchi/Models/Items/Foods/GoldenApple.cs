@@ -1,4 +1,5 @@
-﻿using PokeGotchi.Models.Enums;
+﻿using System.Security.AccessControl;
+using PokeGotchi.Models.Enums;
 using System.Text.Json.Serialization;
 
 namespace PokeGotchi.Models.Items.Foods
@@ -13,20 +14,10 @@ namespace PokeGotchi.Models.Items.Foods
             BuyValue = 50;
             SellValue = 25;
             NutritionValue = 50;
-        }
-
-        public override void Consume(Partner partner)
-        {
-            partner.IncreaseStat(Stats.Hunger, NutritionValue);
-
-            partner.IncreaseStat(Stats.Happiness, 20);
-
-            partner.IncreaseStat(Stats.Friendship, 10);
-
-            partner.IncreaseStat(Stats.Experience, 15);
-
-            partner.IncreaseStat(Stats.Energy, 30);
-
+            HappinessValue = 20;
+            JoyValue = 15;
+            ExpValue = 15;
+            EnergyValue = 30;
         }
 
     }

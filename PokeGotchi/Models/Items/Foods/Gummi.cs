@@ -10,30 +10,20 @@ namespace PokeGotchi.Models.Items.Foods
         [JsonConstructor]
         public Gummi(GummiColour colour)
         {
-            this.Name = $"{colour} Gummi";
-            this.Image = $"images/items/food/gummi/{colour.ToString().ToLower()}-gummi.png";
-            this.BuyValue = 25;
-            this.SellValue = 18;
-            this.NutritionValue = 20; // Example nutrition value, adjust as needed
-            this.Colour = colour;
+            Name = $"{colour} Gummi";
+            Image = $"images/items/food/gummi/{colour.ToString().ToLower()}-gummi.png";
+            BuyValue = 25;
+            SellValue = 18;
+            NutritionValue = 15;
+            Colour = colour;
+
+            HappinessValue = 10;
+            JoyValue = 5;
+            EnergyValue = 10;
+            ExpValue = 3;
+
         }
 
-        public override void Consume(Partner partner)
-        {
-            if (partner.FavouriteGummi.Colour == this.Colour)
-            {
-                partner.IncreaseStat(Stats.Happiness, 35);
-            }
-            else if (partner.HatedGummi.Colour == this.Colour)
-            {
-                partner.IncreaseStat(Stats.Happiness, 20);
-            }
-            else
-            {
-                partner.IncreaseStat(Stats.Happiness, 12);
-            }
-
-            partner.IncreaseStat(Stats.Hunger, 12);
-        }
+       
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IConsumable
     {
-        public void Consume(Partner partner);
+        public void Consume();
     }
 }

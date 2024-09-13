@@ -2,15 +2,21 @@
 
 namespace PokeGotchi.Models.Items
 {
-    public class Ball : Item
+    public class Ball : Toy
     {
         [JsonConstructor]
         public Ball()
         {
-            this.Name = "Ball";
-            this.Image = "images/items/Ball.png";
-            this.BuyValue = 20;
-            this.SellValue = 15;
+            Name = "Ball";
+            Image = "images/items/Ball.png";
+            BuyValue = 20;
+            SellValue = 15;
+
+            HappinessValue = 20;
+            JoyValue = 8;
+            ExhaustionValue = 12;
+            ExpValue = 12;
+
         }
     }
 }

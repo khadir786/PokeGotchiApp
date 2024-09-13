@@ -1,4 +1,5 @@
 ﻿using PokeGotchi.Models.Enums;
+using PokeGotchi.Models.Items;
 using PokeGotchi.Models.Items.Foods;
 
 namespace PokeGotchi.Models;
@@ -171,17 +172,48 @@ public class Partner : Pokemon
 
     public void Eat(Food food)
     {
-        Stats[Enums.Stats.Hunger] += food.NutritionValue;
+        if (food is Gummi gummi)
+        {
+            if (FavouriteGummi.Colour == gummi.Colour)
+            {
+                IncreaseStat(Enums.Stats.Happiness, gummi.HappinessValue + 20);
+            }
+            else if (HatedGummi.Colour == gummi.Colour)
+            {
+                DecreaseStat(Enums.Stats.Happiness, 20);
+                DecreaseStat(Enums.Stats.Friendship, 10);
+            }
+            else
+            {
+                IncreaseStat(Enums.Stats.Happiness, gummi.HappinessValue);
+            }
+        }
+
+        IncreaseStat(Enums.Stats.Hunger, food.NutritionValue);
+        IncreaseStat(Enums.Stats.Energy, food.EnergyValue);
+        IncreaseStat(Enums.Stats.Experience, food.ExpValue);
+
+        IsMoving = false;
+        AnimationState = "images/animations/eat.gif";
     }
+
+
 
     public void Yawn()
     {
         throw new NotImplementedException();
     }
 
-    public void Tumble()
+    public void Play(Toy toy)
     {
-        throw new NotImplementedException();
+        IsMoving = false;
+        IncreaseStat(Enums.Stats.Happiness, toy.HappinessValue);
+        IncreaseStat(Enums.Stats.Friendship, toy.JoyValue);
+        IncreaseStat(Enums.Stats.Experience, toy.ExpValue);
+        DecreaseStat(Enums.Stats.Energy, toy.ExhaustionValue);
+
+        AnimationState = "images/animations/tumble-back.gif";
+
     }
 
     public void Fall()

@@ -13,19 +13,10 @@ namespace PokeGotchi.Models.Items.Foods
             BuyValue = 12;
             SellValue = 6;
             NutritionValue = 20;
-        }
-        public override void Consume(Partner partner)
-        {
-            partner.IncreaseStat(Stats.Hunger, NutritionValue);
-
-            partner.IncreaseStat(Stats.Happiness, 8);
-
-            partner.IncreaseStat(Stats.Friendship, 3);
-
-            partner.IncreaseStat(Stats.Experience, 3);
-
-            partner.IncreaseStat(Stats.Energy, 15);
-
+            HappinessValue = 8;
+            JoyValue = 3;
+            ExpValue = 3;
+            EnergyValue = 15;
         }
     }
 

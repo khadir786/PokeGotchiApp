@@ -1,20 +1,27 @@
 ﻿@using PokeGotchi.Models
+@using PokeGotchi.Models.Interfaces
+@using PokeGotchi.Models.Items
 
 <div id="inventory-container">
     <div class="inventory-grid">
-        @for (int i = 0; i < 8; i++) 
+        @for (int i = 0; i < 8; i++)
         {
             <div class="grid-cell">
                 @if (i < Player.Inventory.Items.Count)
-            {
-                <!-- if there is an item in the list, display its image -->
-                <img src="@Player.Inventory.Items[i].Image" alt="@Player.Inventory.Items[i].Name" />
-            }
-            else
-            {
-                <!-- empty cell if no item exists at this index -->
+                {
+                    var item = Player.Inventory.Items[i];
+                    <!-- If there is an item in the list, display its image and buttons for interaction -->
+                    <img src="@item.Image" alt="@item.Name" />
+                    <div class="item-actions">
+                        <button @onclick="() => UseItem(item)">Use</button>
+                        <button @onclick="() => SellItem(item)">Sell</button>
+                    </div>
+                }
+                else
+                {
+                    <!-- Empty cell if no item exists at this index -->
                     <img src="" />
-            }
+                }
             </div>
         }
     </div>
@@ -22,6 +29,54 @@
 
 @code {
     [Parameter] public Player Player { get; set; }
+    [Parameter] public Partner PartnerPokemon { get; set; }
     [Parameter] public EventCallback OnSaveAndRefresh { get; set; }
 
+    private async Task UseItem(Item item)
+    {
+        if (item == null)
+        {
+            Console.WriteLine("Error: The item is null.");
+            return;
+        }
+
+        if (item is Food food)
+        {
+            // if item is consumable (Food), perform the consume action
+            food.Consume(); // some food pass this
+            PartnerPokemon.Eat(food); // but they do not pass this...
+            StateHasChanged();
+            await Task.Delay(2000); 
+            PartnerPokemon.SetIdle();
+        }
+        else if (item is Toy toy)
+        {
+            toy.Play();
+            Console.WriteLine($"{toy.Name} will be played with.");
+            PartnerPokemon.Play(toy);
+            await Task.Delay(2000); 
+            PartnerPokemon.SetIdle();
+        }
+        else
+        {
+            Console.WriteLine("Error: The item is neither food nor toy."); // and then this is executed
+            return;
+        }
+
+        Player.Inventory.Items.Remove(item);
+    
+        await OnSaveAndRefresh.InvokeAsync(); 
+    }
+
+    // ?????? gummis can invoke Consume() method because they are food but the PartnerPokemon.Eat(food) method cannot be invoked because it is neither food nor toy
+
+
+    private async Task SellItem(Item item)
+    {
+        Player.Money += item.SellValue;
+
+        Player.Inventory.Items.Remove(item);
+
+        await OnSaveAndRefresh.InvokeAsync();
+    }
 }
