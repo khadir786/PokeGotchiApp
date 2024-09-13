@@ -1,7 +1,10 @@
-﻿namespace PokeGotchi.Models.Items
+﻿using System.Text.Json.Serialization;
+
+namespace PokeGotchi.Models.Items
 {
     public class Glasses : Item
     {
+        [JsonConstructor]
         public Glasses()
         {
             this.Name = "Glasses";

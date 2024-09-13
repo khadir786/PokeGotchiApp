@@ -8,9 +8,9 @@
 
     <PartnerMood PartnerPokemon="@PartnerPokemon" />
     
-    <ShopComp Shop="@Shop" Player="@Player" Inventory="@Inventory"  OnSaveAndRefresh="@OnSaveAndRefresh"/>
+    <ShopComp Shop="@Shop" Player="@Player" OnSaveAndRefresh="@OnSaveAndRefresh"/>
 
-    <InventoryComp Inventory="@Inventory" />
+    <InventoryComp Player="@Player" OnSaveAndRefresh="@OnSaveAndRefresh" />
 
     <PartnerStats PartnerPokemon="@PartnerPokemon" />
 
@@ -22,6 +22,5 @@
     [Parameter] public Player Player { get; set; }
     [Parameter] public EventCallback OnSaveAndRefresh { get; set; }
     private Shop Shop { get; set; } = new Shop();
-    private Inventory Inventory { get; set; } = new Inventory();
 
 }

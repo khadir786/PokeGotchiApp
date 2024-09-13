@@ -5,10 +5,10 @@
         @for (int i = 0; i < 8; i++) 
         {
             <div class="grid-cell">
-                @if (i < Inventory.Items.Count)
+                @if (i < Player.Inventory.Items.Count)
             {
                 <!-- if there is an item in the list, display its image -->
-                <img src="@Inventory.Items[i].Image" alt="@Inventory.Items[i].Name" />
+                <img src="@Player.Inventory.Items[i].Image" alt="@Player.Inventory.Items[i].Name" />
             }
             else
             {
@@ -21,5 +21,7 @@
 </div>
 
 @code {
-    [Parameter] public Inventory Inventory { get; set; }
+    [Parameter] public Player Player { get; set; }
+    [Parameter] public EventCallback OnSaveAndRefresh { get; set; }
+
 }

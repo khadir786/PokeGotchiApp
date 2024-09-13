@@ -24,7 +24,6 @@
 @code {
     [Parameter] public Shop Shop { get; set; }
     [Parameter] public Player Player { get; set; }
-    [Parameter] public Inventory Inventory { get; set; }
     [Parameter] public EventCallback OnSaveAndRefresh { get; set; }
 
     private bool enoughFunds;
@@ -40,7 +39,7 @@
         {
             enoughFunds = true;
             Player.Money -= item.BuyValue;
-            Inventory.AddItem(item);
+            Player.Inventory.AddItem(item);
         }
         else
         {

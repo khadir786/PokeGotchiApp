@@ -5,10 +5,13 @@
         public string Name { get; set; }
         public int Money { get; set; }
 
+        public Inventory Inventory { get; set; }
+
         public Player()
         {
-            Name = "Phil Asolder";
+            Name = "Phil A. Solder";
             Money = 100;
+            Inventory = new Inventory();
         }
 
 

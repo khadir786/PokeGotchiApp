@@ -1,4 +1,5 @@
-﻿using PokeGotchi.Models.Enums;
+﻿using System.Text.Json.Serialization;
+using PokeGotchi.Models.Enums;
 
 namespace PokeGotchi.Models.Items.Foods
 {
@@ -6,6 +7,7 @@ namespace PokeGotchi.Models.Items.Foods
     {
         public GummiColour Colour { get; set; }
 
+        [JsonConstructor]
         public Gummi(GummiColour colour)
         {
             this.Name = $"{colour} Gummi";

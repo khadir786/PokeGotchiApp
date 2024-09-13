@@ -1,9 +1,11 @@
-﻿using PokeGotchi.Models.Enums;
+﻿using System.Text.Json.Serialization;
+using PokeGotchi.Models.Enums;
 
 namespace PokeGotchi.Models.Items.Foods
 {
     public class Apple : Food
     {
+        [JsonConstructor]
         public Apple()
         {
             Name = "Apple";
