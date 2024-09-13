@@ -30,6 +30,12 @@
     transition: background-color 0.2s ease;
 }
 
+.grid-cell img {
+    width: 70%;
+    height: auto;
+    image-rendering: pixelated;
+}
+
 .grid-cell:hover {
     background-color: #9E7B58;
 }
