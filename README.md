@@ -65,6 +65,14 @@ PokeGotchi is a standalone WebAssembly app made with Blazor. It is a game inspir
 
 ![dragging-demo-resize](https://github.com/user-attachments/assets/c36af887-0208-4210-8270-5f3d47d4e662)
 
+#### **13/09/2024**
+- Added Player data - Name and Money
+- Added a shop and basic inventory system - The player can buy items and they go into the inventory
+- Added the ability for the Partner Pokemon to move autonomously
+
+![walkin-resize](https://github.com/user-attachments/assets/a2a1ade2-4b59-47a1-9cc3-862ea2508f1a)
+
+
 
 All sprites and animations are the property of Nintendo and have been sourced from https://sprites.pmdcollab.org/
 
