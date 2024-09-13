@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Metadata;
 using PokeGotchi.Models.Enums;
+using PokeGotchi.Models.Items.Foods;
 
 namespace PokeGotchi.Models;
 
@@ -8,7 +9,8 @@ public class Partner : Pokemon
     public string Name { get; set; } = "Riolu";
     public Dictionary<Stats, int> Stats { get; set; } = new();
     public Mood CurrentMood { get; set; }
-    public FavGummi
+    public Gummi FavouriteGummi { get; set; }
+    public Gummi HatedGummi { get; set; }
 
     public int GridRow { get; set; }
     public int GridColumn { get; set; }
@@ -26,14 +28,33 @@ public class Partner : Pokemon
         this.GridColumn = 0;
         this.AnimationState = "images/animations/idle.gif";
 
-        // can still have a random Happiness value if none is provided but also allow control over it if needed
+        // set random favourite and hated gummi
+        Array gummiColors = Enum.GetValues(typeof(GummiColour));
+        var random = new Random();
+
+        // set the favourite gummi
+        GummiColour favouriteGummiColour = (GummiColour)gummiColors.GetValue(random.Next(gummiColors.Length));
+        this.FavouriteGummi = new Gummi(favouriteGummiColour);
+
+        GummiColour hatedGummiColour;
+
+        // do-while loop ensures hated gummi is not the same as favourite gummi
+        do
+        {
+            hatedGummiColour = (GummiColour)gummiColors.GetValue(random.Next(gummiColors.Length));
+        }
+        while (hatedGummiColour == favouriteGummiColour);
+
+        this.HatedGummi = new Gummi(hatedGummiColour);
+
+        // set stats
         Stats[Enums.Stats.Happiness] = Random.Shared.Next(15, 30);
         Stats[Enums.Stats.Friendship] = 10;
         Stats[Enums.Stats.Hunger] = 60;
         Stats[Enums.Stats.Energy] = 55;
         Stats[Enums.Stats.Experience] = 0;
 
-        // random starting mood between angry, playful and wary
+        // set random starting mood between angry, playful and wary
         Mood[] possibleMoods = { Mood.Angry, Mood.Playful, Mood.Wary };
         int randomIdx = Random.Shared.Next(possibleMoods.Length);
         this.CurrentMood = possibleMoods[randomIdx];
