@@ -146,7 +146,8 @@ namespace PokeGotchi.Pages
         private async Task ExportData()
         {
             // serialize the PartnerPokemon object to json
-            var jsonSaveData = JsonSerializer.Serialize(GameState.SaveData);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var jsonSaveData = JsonSerializer.Serialize(GameState.SaveData, options);
 
             // js function for triggering the downloadFile function (defined in index.html)
             await JS.InvokeVoidAsync("downloadFile", "pokeGotchiSaveData.json", jsonSaveData);

@@ -1,5 +1,4 @@
 ﻿using PokeGotchi.Models.Enums;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PokeGotchi.Models.Items.Foods
 {
