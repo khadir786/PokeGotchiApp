@@ -4,6 +4,8 @@
 <div id="playground-container" style="grid-template-columns: repeat(@NumOfColumns, 50px); grid-template-rows: repeat(@NumOfRows, 50px);">
 
     <button @onclick="TogglePickUpMode">Pick Up</button>
+    <button @onclick="() => OnExportData.InvokeAsync()">Export Data</button>
+
 
     <!--Cells (amount generated based on container size)-->
     @for (int row = 0; row < NumOfRows; row++)
@@ -35,6 +37,8 @@
 
     [Parameter] public EventCallback<(int, int)> OnTargetCellClick { get; set; } // Pass the clicked cell as (row, col)
     [Parameter] public EventCallback<(int, int)> OnSaveAndRefresh { get; set; } //
+    [Parameter] public EventCallback OnExportData { get; set; }
+
 
     // track the active cell (default int is 0 - would conflict with actual rows and cols)
     private int clickedRow = -1;
