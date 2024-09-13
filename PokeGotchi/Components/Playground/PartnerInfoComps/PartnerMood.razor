@@ -1,0 +1,10 @@
+﻿@using PokeGotchi.Models
+
+<div id="playground-current-mood">
+    <p>Mood</p>
+    <p>@PartnerPokemon.CurrentMood</p>
+</div>
+
+@code {
+    [Parameter] public Partner PartnerPokemon { get; set; }
+}

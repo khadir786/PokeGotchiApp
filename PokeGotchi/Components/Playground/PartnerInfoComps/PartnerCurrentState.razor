@@ -1,0 +1,10 @@
+﻿@using PokeGotchi.Models
+
+<div id="playground-current-state-container">
+    <img id="playground-current-state-sprite" src="@PartnerPokemon.AnimationState" />
+    <p id="playground-partner-name">@PartnerPokemon.Name</p>
+</div>
+
+@code {
+    [Parameter] public Partner PartnerPokemon { get; set; }
+}

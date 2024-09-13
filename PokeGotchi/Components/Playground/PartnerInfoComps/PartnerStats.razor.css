@@ -1,0 +1,22 @@
+﻿#playground-partner-stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    background-color: #4B3F34;
+    padding: 20px;
+    text-align: center;
+    justify-content: space-between;
+}
+
+#playground-partner-stats-container p {
+    font-size: 18px;
+    color: #ECC792;
+}
+
+#playground-partner-stats-container p:nth-child(even) {
+    font-weight: bold;
+    color: white;
+}

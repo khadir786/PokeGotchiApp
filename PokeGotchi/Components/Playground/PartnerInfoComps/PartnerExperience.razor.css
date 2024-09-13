@@ -1,0 +1,17 @@
+﻿
+
+.stat-bar {
+    height: 15px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#playground-experience {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 24px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    background-color: #4B3F34;
+    padding: 20px;
+}

@@ -1,0 +1,29 @@
+﻿#playground-current-state-container {
+    border: 2px solid rgba(255, 255, 255, .2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 22%;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    background-color: #4B3F34;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#playground-partner-name {
+    position: absolute;
+    top: 70%;
+    font-size: 30px;
+    text-align: center;
+    margin: 0;
+    margin-top: 10%;
+}
+
+#playground-current-state-sprite {
+    width: 70%;
+    image-rendering: pixelated;
+    height: auto;
+    margin: 0 auto;
+}

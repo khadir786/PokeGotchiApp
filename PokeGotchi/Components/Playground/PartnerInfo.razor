@@ -1,57 +1,17 @@
 ﻿@using PokeGotchi.Models
+@using PokeGotchi.Components.Playground.PartnerInfoComps
 @using PokeGotchi.Models.Enums
 
 <div id="playground-partner-info">
+    
+    <PartnerCurrentState PartnerPokemon="@PartnerPokemon" />
 
-    <!-- Current State -->
-    <div id="playground-current-state-container">
-        <img id="playground-current-state-sprite" src="@PartnerPokemon.AnimationState" />
-        <p id="playground-partner-name">@PartnerPokemon.Name</p>
-    </div>
+    <PartnerMood PartnerPokemon="@PartnerPokemon" />
 
-    <!-- Mood -->
-    <div id="playground-current-mood">
-        <p>Mood</p>
-        <p>@PartnerPokemon.CurrentMood </p>
-    </div>
+    <PartnerStats PartnerPokemon="@PartnerPokemon" />
 
-    <!-- Stats -->
-    <div id="playground-partner-stats-container">
-        <!-- Happiness Section -->
-        <div class="stat-section">
-            <p>Happiness</p>
-            <div class="stat-bar happiness-bar" style="width: @PartnerPokemon.Stats[Stats.Happiness]%;"></div>
-        </div>
-
-        <!-- Friendship Section -->
-        <div class="stat-section">
-            <p>Friendship</p>
-            <div class="stat-bar friendship-bar" style="width: @PartnerPokemon.Stats[Stats.Friendship]%;"></div>
-        </div>
-
-        <!-- Hunger Section -->
-        <div class="stat-section">
-            <p>Hunger</p>
-            <div class="stat-bar hunger-bar" style="width: @PartnerPokemon.Stats[Stats.Hunger]%;"></div>
-        </div>
-
-        <!-- Energy Section -->
-        <div class="stat-section">
-            <p>Energy</p>
-            <div class="stat-bar energy-bar" style="width: @PartnerPokemon.Stats[Stats.Energy]%;"></div>
-        </div>
-    </div>
-
-    <!-- Experience -->
-    <div id="playground-experience">
-        <p>Experience</p>
-        <div class="stat-bar experience-bar"></div>
-    </div>
-
-   
+    <PartnerExperience ExperienceValue="@PartnerPokemon.Stats[Stats.Experience]" />
 </div>
-
-
 
 @code {
     [Parameter] public Partner PartnerPokemon { get; set; }
