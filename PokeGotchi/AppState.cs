@@ -51,7 +51,9 @@ namespace PokeGotchi
                 // ...otherwise, initialise with default properties
                 SaveData = new SaveData
                 {
-                    PartnerPokemon = new Partner()
+                    PartnerPokemon = new Partner(),
+                    Player = new Player()
+                    
                 };
                 await SaveGameDataAsync(); // Save the default data
             }
