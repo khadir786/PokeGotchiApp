@@ -7,7 +7,7 @@ namespace PokeGotchi.Models.Items.Foods
         public GrimerFood()
         {
             Name = "Grimer Food";
-            Image = "images/items/food/grimer-food.png";
+            Image = "images/items/food/normal/grimer-food.png";
             BuyValue = 6;
             SellValue = 2;
             NutritionValue = 25;

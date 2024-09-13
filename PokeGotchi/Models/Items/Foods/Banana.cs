@@ -7,7 +7,7 @@ namespace PokeGotchi.Models.Items.Foods
         public Banana()
         {
             Name = "Banana";
-            Image = "images/items/food/banana.png";
+            Image = "images/items/food/normal/banana.png";
             BuyValue = 12;
             SellValue = 6;
             NutritionValue = 20;

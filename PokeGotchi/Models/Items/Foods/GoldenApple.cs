@@ -7,7 +7,7 @@ namespace PokeGotchi.Models.Items.Foods
         public GoldenApple()
         {
             Name = "Golden Apple";
-            Image = "images/items/food/golden-apple.png";
+            Image = "images/items/food/normal/golden-apple.png";
             BuyValue = 50;
             SellValue = 25;
             NutritionValue = 50;
