@@ -9,8 +9,8 @@ namespace PokeGotchi.Models.Items.Foods
         public Gummi(GummiColour colour)
         {
             this.Name = $"{colour} Gummi";
-            this.Image = $"images/items/food/gummis/{colour.ToString().ToLower()}-gummi.png"; 
-            this.BuyValue = 50; 
+            this.Image = $"images/items/food/gummis/{colour.ToString().ToLower()}-gummi.png";
+            this.BuyValue = 50;
             this.SellValue = 25;
             this.NutritionValue = 20; // Example nutrition value, adjust as needed
             this.Colour = colour;
@@ -20,14 +20,18 @@ namespace PokeGotchi.Models.Items.Foods
         {
             if (partner.FavouriteGummi.Colour == this.Colour)
             {
-                partner.Stats[Enums.Stats.Happiness] += 30; 
+                partner.IncreaseStat(Stats.Happiness, 35);
+            }
+            else if (partner.HatedGummi.Colour == this.Colour)
+            {
+                partner.IncreaseStat(Stats.Happiness, 20);
             }
             else
             {
-                partner.Stats[Enums.Stats.Happiness] += 5; 
+                partner.IncreaseStat(Stats.Happiness, 12);
             }
 
-            partner.Stats[Enums.Stats.Hunger] += NutritionValue; 
+            partner.IncreaseStat(Stats.Hunger, 12);
         }
     }
 }

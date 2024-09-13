@@ -16,16 +16,15 @@ namespace PokeGotchi.Models.Items.Foods
 
         public override void Consume(Partner partner)
         {
-            partner.Stats[Enums.Stats.Hunger] += NutritionValue;
+            partner.IncreaseStat(Stats.Hunger, NutritionValue);
 
-            partner.Stats[Enums.Stats.Happiness] += 5;
+            partner.IncreaseStat(Stats.Happiness, 5);
 
-            partner.Stats[Stats.Friendship] += 3;
+            partner.IncreaseStat(Stats.Friendship, 3);
+            
+            partner.IncreaseStat(Stats.Experience, 3);
 
-            partner.Stats[Stats.Experience] += 3;
-
-            partner.Stats[Stats.Energy] += 10;
-
+            partner.IncreaseStat(Stats.Energy, 10);
 
         }
     }
