@@ -1,0 +1,13 @@
+﻿#playground-current-mood {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ECC792;
+}
+
+#playground-current-mood > p {
+    margin: 5px 0;
+    font-size: 18px;
+    color: white;
+}

@@ -1,0 +1,13 @@
+﻿@using PokeGotchi.Models
+@using PokeGotchi.Models.Enums
+
+<div class="stat-section">
+    <p>@StatName</p>
+    <div class="stat-bar @StatClass" style="width: @StatValue%;"></div>
+</div>
+
+@code {
+    [Parameter] public string StatName { get; set; }
+    [Parameter] public string StatClass { get; set; }
+    [Parameter] public int StatValue { get; set; }
+}

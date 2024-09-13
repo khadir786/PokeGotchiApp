@@ -1,0 +1,27 @@
+﻿@using PokeGotchi.Models
+
+<div id="inventory-container">
+    <div class="inventory-grid">
+        @for (int i = 0; i < 8; i++) 
+        {
+            <div class="grid-cell">
+                @if (i < Player.Inventory.Items.Count)
+            {
+                <!-- if there is an item in the list, display its image -->
+                <img src="@Player.Inventory.Items[i].Image" alt="@Player.Inventory.Items[i].Name" />
+            }
+            else
+            {
+                <!-- empty cell if no item exists at this index -->
+                    <img src="" />
+            }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public Player Player { get; set; }
+    [Parameter] public EventCallback OnSaveAndRefresh { get; set; }
+
+}

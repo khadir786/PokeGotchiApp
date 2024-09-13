@@ -1,9 +1,12 @@
-﻿namespace PokeGotchi.Models
+﻿using PokeGotchi.Models.Interfaces;
+
+namespace PokeGotchi.Models
 {
-    public class Food
+    public abstract class Food : Item, IConsumable
     {
-        public string Name { get; set; }
         public int NutritionValue { get; set; }
+
+        public abstract void Consume(Partner partner);
 
     }
 }

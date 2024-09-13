@@ -1,0 +1,15 @@
+﻿@using PokeGotchi.Models
+@using PokeGotchi.Models.Enums
+
+<div id="playground-partner-stats-container">
+
+    <StatSection StatName="Happiness" StatClass="happiness-bar" StatValue="@PartnerPokemon.Stats[Stats.Happiness]" />
+    <StatSection StatName="Friendship" StatClass="friendship-bar" StatValue="@PartnerPokemon.Stats[Stats.Friendship]" />
+    <StatSection StatName="Hunger" StatClass="hunger-bar" StatValue="@PartnerPokemon.Stats[Stats.Hunger]" />
+    <StatSection StatName="Energy" StatClass="energy-bar" StatValue="@PartnerPokemon.Stats[Stats.Energy]" />
+
+</div>
+
+@code {
+    [Parameter] public Partner PartnerPokemon { get; set; }
+}

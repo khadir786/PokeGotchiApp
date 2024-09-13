@@ -1,0 +1,27 @@
+﻿.stat-section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.stat-bar {
+    height: 15px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.happiness-bar {
+    background-color: #FFDD57; 
+}
+
+.friendship-bar {
+    background-color: #57AFFF; 
+}
+
+.hunger-bar {
+    background-color: #FF5757; 
+}
+
+.energy-bar {
+    background-color: #57FF95; 
+}

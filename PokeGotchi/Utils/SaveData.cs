@@ -6,6 +6,8 @@ namespace PokeGotchi.Utils
     {
         public Partner PartnerPokemon { get; set; }
 
+        public Player Player { get; set; }
+
         // other properties to save
         // maybe player data?
     }

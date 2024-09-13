@@ -1,5 +1,5 @@
-﻿using System.Reflection.Metadata;
-using PokeGotchi.Models.Enums;
+﻿using PokeGotchi.Models.Enums;
+using PokeGotchi.Models.Items.Foods;
 
 namespace PokeGotchi.Models;
 
@@ -8,6 +8,8 @@ public class Partner : Pokemon
     public string Name { get; set; } = "Riolu";
     public Dictionary<Stats, int> Stats { get; set; } = new();
     public Mood CurrentMood { get; set; }
+    public Gummi FavouriteGummi { get; set; }
+    public Gummi HatedGummi { get; set; }
 
     public int GridRow { get; set; }
     public int GridColumn { get; set; }
@@ -17,6 +19,9 @@ public class Partner : Pokemon
 
     private bool isPickUpable = false;
 
+    private const int MaxStatValue = 100;
+    private const int MinStatValue = 0;
+
     public Partner()
     {
         this.Species = "Riolu";
@@ -25,18 +30,65 @@ public class Partner : Pokemon
         this.GridColumn = 0;
         this.AnimationState = "images/animations/idle.gif";
 
-        // can still have a random Happiness value if none is provided but also allow control over it if needed
+        // set random favourite and hated gummi
+        Array gummiColours = Enum.GetValues(typeof(GummiColour));
+        var random = new Random();
+
+        // set the favourite gummi
+        GummiColour favouriteGummiColour = (GummiColour)gummiColours.GetValue(random.Next(gummiColours.Length));
+        this.FavouriteGummi = new Gummi(favouriteGummiColour);
+
+        GummiColour hatedGummiColour;
+
+        // do-while loop ensures hated gummi is not the same as favourite gummi
+        do
+        {
+            hatedGummiColour = (GummiColour)gummiColours.GetValue(random.Next(gummiColours.Length));
+        }
+        while (hatedGummiColour == favouriteGummiColour);
+
+        this.HatedGummi = new Gummi(hatedGummiColour);
+
+        // set stats
         Stats[Enums.Stats.Happiness] = Random.Shared.Next(15, 30);
         Stats[Enums.Stats.Friendship] = 10;
         Stats[Enums.Stats.Hunger] = 60;
         Stats[Enums.Stats.Energy] = 55;
         Stats[Enums.Stats.Experience] = 0;
 
-        // random starting mood between angry, playful and wary
+        // set random starting mood between angry, playful and wary
         Mood[] possibleMoods = { Mood.Angry, Mood.Playful, Mood.Wary };
         int randomIdx = Random.Shared.Next(possibleMoods.Length);
         this.CurrentMood = possibleMoods[randomIdx];
         
+    }
+
+    public void SetStat(Stats stat, int value)
+    {
+        if (value > MaxStatValue)
+        {
+            Stats[stat] = MaxStatValue;
+        }
+        else if (value < MinStatValue)
+        {
+            Stats[stat] = MinStatValue;
+        }
+        else
+        {
+            Stats[stat] = value;
+        }
+    }
+
+    // increment any stat by a specified value, ensuring it doesn't exceed the maximum
+    public void IncreaseStat(Stats stat, int value)
+    {
+        SetStat(stat, Stats[stat] + value);
+    }
+
+    // decrement any stat by a specified value, ensuring it doesn't go below the minimum
+    public void DecreaseStat(Stats stat, int value)
+    {
+        SetStat(stat, Stats[stat] - value);
     }
 
     public override void Walk(Direction direction, int numRows, int numColumns)
@@ -95,7 +147,7 @@ public class Partner : Pokemon
         if (isPickUpable)
         {
             AnimationState = "images/animations/losing-balance.gif";
-            Stats[Enums.Stats.Happiness] -= 3;
+            DecreaseStat(Enums.Stats.Happiness, 3);
         }
     }
 

@@ -6,18 +6,18 @@
     @if (PartnerPokemon != null)
     {
         <!-- Partner Info Component -->
-        <PartnerInfo PartnerPokemon="@PartnerPokemon" />
+        <PartnerInfo PartnerPokemon="@PartnerPokemon" Player="@Player" OnSaveAndRefresh="SaveAndRefresh"/>
 
         <!-- Playground Grid Component -->
-        <PlaygroundGrid 
-            NumOfRows="@numOfRows" 
-            NumOfColumns="@numOfColumns" 
-            PartnerPokemon="@PartnerPokemon" 
-            OnTargetCellClick="MoveToTarget" 
-            OnSaveAndRefresh="SaveAndRefresh"/>
+        <PlaygroundGrid NumOfRows="@numOfRows"
+                        NumOfColumns="@numOfColumns"
+                        PartnerPokemon="@PartnerPokemon"
+                        OnTargetCellClick="MoveToTarget"
+                        OnSaveAndRefresh="SaveAndRefresh" />
 
-
-
+        <!--
+        <ControlButtons OnExportData="ExportData" OnGoIdle="GoIdle" OnMovePartner="MovePartner"/>
+        -->
     }
     else
     {
