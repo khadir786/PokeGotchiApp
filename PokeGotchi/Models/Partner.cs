@@ -20,6 +20,9 @@ public class Partner : Pokemon
 
     private bool isPickUpable = false;
 
+    private const int MaxStatValue = 100;
+    private const int MinStatValue = 0;
+
     public Partner()
     {
         this.Species = "Riolu";
@@ -59,6 +62,34 @@ public class Partner : Pokemon
         int randomIdx = Random.Shared.Next(possibleMoods.Length);
         this.CurrentMood = possibleMoods[randomIdx];
         
+    }
+
+    public void SetStat(Stats stat, int value)
+    {
+        if (value > MaxStatValue)
+        {
+            Stats[stat] = MaxStatValue;
+        }
+        else if (value < MinStatValue)
+        {
+            Stats[stat] = MinStatValue;
+        }
+        else
+        {
+            Stats[stat] = value;
+        }
+    }
+
+    // increment any stat by a specified value, ensuring it doesn't exceed the maximum
+    public void IncreaseStat(Stats stat, int value)
+    {
+        SetStat(stat, Stats[stat] + value);
+    }
+
+    // decrement any stat by a specified value, ensuring it doesn't go below the minimum
+    public void DecreaseStat(Stats stat, int value)
+    {
+        SetStat(stat, Stats[stat] - value);
     }
 
     public override void Walk(Direction direction, int numRows, int numColumns)
@@ -117,7 +148,7 @@ public class Partner : Pokemon
         if (isPickUpable)
         {
             AnimationState = "images/animations/losing-balance.gif";
-            Stats[Enums.Stats.Happiness] -= 3;
+            DecreaseStat(Enums.Stats.Happiness, 3);
         }
     }
 
