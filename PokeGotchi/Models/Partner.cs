@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata;
-using PokeGotchi.Models.Enums;
+﻿using PokeGotchi.Models.Enums;
 using PokeGotchi.Models.Items.Foods;
 
 namespace PokeGotchi.Models;
