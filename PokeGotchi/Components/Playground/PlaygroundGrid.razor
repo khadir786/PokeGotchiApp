@@ -88,7 +88,7 @@
             clickedCol = col;
 
             // place the partner down at the clicked cell
-            PartnerPokemon.PlaceDown(row, col + 1);
+            PartnerPokemon.PlaceDown(row, col + 2); // +2 because there are 2 buttons pushing the cells by that much
             StateHasChanged();
 
 
@@ -106,7 +106,7 @@
             clickedRow = row;
             clickedCol = col;
 
-            await OnTargetCellClick.InvokeAsync((row, col + 1));
+            await OnTargetCellClick.InvokeAsync((row, col + 2));
 
             StateHasChanged();
         }
