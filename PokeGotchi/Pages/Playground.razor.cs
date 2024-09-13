@@ -12,6 +12,8 @@ namespace PokeGotchi.Pages
         private int cellSize = 50;
         private int numOfRows;
         private int numOfColumns;
+        private bool autoMoveEnabled = true; // random autonomous movement toggle
+        private bool manualMoveInProgress = false; // flag to pause autonomous movement during manual movement
 
         private DotNetObjectReference<Playground> dotNetHelper;
         private CancellationTokenSource _movementCancellationTokenSource;
@@ -23,6 +25,13 @@ namespace PokeGotchi.Pages
             Player = GameState.SaveData.Player;
             dotNetHelper = DotNetObjectReference.Create(this); // needed for resize observer
         }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            StartAutonomousMovement();
+        }
+
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -65,11 +74,13 @@ namespace PokeGotchi.Pages
             MoveTowardsTarget(target.targetRow, target.targetCol);
         }
 
-
+        // method for when the player clicks on a cell to direct the partner to go there
         private async Task MoveTowardsTarget(int targetRow, int targetCol)
         {
             // cancel any ongoing movement if the player clicks on another cell
             _movementCancellationTokenSource?.Cancel();
+
+            manualMoveInProgress = true;
 
             // create a new cancellation token source for the new movement task
             _movementCancellationTokenSource = new CancellationTokenSource();
@@ -80,7 +91,8 @@ namespace PokeGotchi.Pages
             try
             {
                 // loop until partner reaches target row and column OR the movement is cancelled
-                while ((PartnerPokemon.GridRow != targetRow || PartnerPokemon.GridColumn != targetCol) && !cancellationToken.IsCancellationRequested)
+                while ((PartnerPokemon.GridRow != targetRow || PartnerPokemon.GridColumn != targetCol) &&
+                       !cancellationToken.IsCancellationRequested)
                 {
                     Console.WriteLine($"Moving to Row: {PartnerPokemon.GridRow}, Col: {PartnerPokemon.GridColumn}");
 
@@ -136,6 +148,44 @@ namespace PokeGotchi.Pages
             catch (TaskCanceledException)
             {
                 Console.WriteLine("Movement canceled.");
+            }
+            finally
+            {
+                manualMoveInProgress = false;
+            }
+        }
+
+        private async Task StartAutonomousMovement()
+        {
+            Random random = new Random();
+            while (autoMoveEnabled)
+            {
+                // wait for a random amount of time before the next move (between 1-3 seconds)
+                await Task.Delay(random.Next(1000, 3000));
+
+                // dont do autonomous movement if manual movement is in progress
+                if (manualMoveInProgress) continue;
+
+                // choose a random direction to move
+                Direction[] directions = (Direction[])Enum.GetValues(typeof(Direction)); // List of directions from direction enum
+                Direction randomDirection = directions[random.Next(directions.Length)];
+
+                // move partner in the chosen direction, a random number of steps (1-3 steps)
+                int steps = random.Next(1, 4);
+                for (int i = 0; i < steps; i++)
+                {
+                    if (!manualMoveInProgress)
+                    {
+                        PartnerPokemon.Walk(randomDirection, numOfRows, numOfColumns);
+                        StateHasChanged();
+                        await Task.Delay(300); // step delay
+                    }
+                }
+
+                // after moving, set the partner to idle for a random duration (2-5 seconds)
+                PartnerPokemon.SetIdle();
+                StateHasChanged();
+                await Task.Delay(random.Next(2000, 5000));
             }
         }
 
